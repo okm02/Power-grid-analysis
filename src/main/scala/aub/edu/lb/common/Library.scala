@@ -24,4 +24,5 @@ object Library {
     val totalEdges = edgesFront.union(edgesBack)
     Graph.fromEdges(totalEdges, 1)
   }
+  
 }
