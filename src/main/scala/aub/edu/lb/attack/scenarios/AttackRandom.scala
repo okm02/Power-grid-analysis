@@ -12,6 +12,13 @@ import org.apache.spark.rdd.RDD.rddToPairRDDFunctions
 
 object AttackRandom extends AttackScenario {
 
+  /**
+   * A method that :
+   * 1) constructs an rdd mapping each SCC Id to a set of vertices and edges belonging to this component
+   * 2) runs RandomBasedremoval an all SCC in parrallel
+   * 3) randomly shuffles the returned results
+   * 4) compute loss in the whole graph
+   */
   def attack(graph: Graph[Int, Int]): Array[Double] = {
 
     val connectedComp = graph.connectedComponents()
@@ -36,7 +43,7 @@ object AttackRandom extends AttackScenario {
 
     val compGraphStruct = changeStructureV.join(changeStructureE)
 
-    val exploitNetwork = compGraphStruct.map(f => degreeBasedRemoval(f._2._1, f._2._2))
+    val exploitNetwork = compGraphStruct.map(f => RandomBasedRemoval(f._2._1, f._2._2))
     var removalScores = exploitNetwork.reduce((a, b) => a ++ b)
     val random = new Random
     removalScores = (random.shuffle(removalScores.toList)).toArray
@@ -50,7 +57,14 @@ object AttackRandom extends AttackScenario {
 
   }
 
-  def degreeBasedRemoval(compVertex: HashSet[VertexId], compEdges: HashSet[(VertexId, VertexId)]): Array[Double] = {
+  /**
+   * A method that :
+   * 1) randomly chooses any vertex in the SCC
+   * 2) removes the chosen vertex
+   * 3) runs SCC to compute the current connectivity of the component
+   * 4) computes the effect of the vertex by subtracting the connectivity before and after removing the vertex
+   */
+  def RandomBasedRemoval(compVertex: HashSet[VertexId], compEdges: HashSet[(VertexId, VertexId)]): Array[Double] = {
 
     val testA = compVertex.clone()
     val testB = compEdges.clone()

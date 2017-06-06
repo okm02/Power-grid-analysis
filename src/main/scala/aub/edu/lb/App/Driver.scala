@@ -10,7 +10,8 @@ import aub.edu.lb.attack.scenarios._
 object Driver {
 
   /**
-   * 
+   * Main that automates the benchmarks by runing different scenarios
+   * on multiple threads and multiple rdd partitions
    */
   def main(args: Array[String]) {
     val threads = Array(64, 32, 16, 8, 4, 2, 1)
@@ -36,7 +37,12 @@ object Driver {
   }
 
   /**
-   * 
+   * @ sc : spark context , used to construct graph with specified number of partitions
+   * @ attackScenario : an object denoting which scenario to run
+   * @ nbPartitions : number of partitions to split the graph
+   * @ inputFileGraph : denotes the input text file
+   * @ outputFile : a text file to write the end results of any scenario
+   * @ debug : boolean to indicate weather to write results to folder or not
    */
   def bench(sc: SparkContext, attackScenario: AttackScenario,
             nbPartitions: Int,

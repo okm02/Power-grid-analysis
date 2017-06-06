@@ -11,18 +11,19 @@ import scala.collection.mutable.HashMap
 import scala.collection.mutable.Stack
 import aub.edu.lb.common._
 
-/**
- * Compute the degree once, then remove vertices in decreasing order w.r.t. the degree of the vertices
- */
 object AttackDegree extends AttackScenario {
 
+  /**
+   * A method that :
+   * 1) constructs an rdd mapping each SCC Id to a set of vertices and edges belonging to this component
+   * 2) runs DegreeBasedremoval an all SCC in parrallel
+   * 3) orders the returned results based on the degree of each vertex
+   * 4) compute loss in the whole graph
+   */
   def attack(graph: Graph[Int, Int]): Array[Double] = {
 
     val connectedComp = graph.connectedComponents() // compute scc for graph
-    /*
-     * here we construct an rdd having
-     * componentId -> all vertices belonging to this scc
-     */
+
     var changeStructureV = connectedComp.vertices.map(f => (f._2, {
       val set = new HashSet[VertexId]()
       set.add(f._1)
@@ -30,10 +31,6 @@ object AttackDegree extends AttackScenario {
     }))
     changeStructureV = changeStructureV.reduceByKey((a, b) => a.union(b))
 
-    /*
-     * Construct an rdd having
-     * componentId -> all edges belonging to this scc
-     */
     var changeStructureE = connectedComp.triplets.map(f => (f.srcAttr, {
       val set = new HashSet[(VertexId, VertexId)]()
       set.add((f.srcId, f.dstId))
@@ -60,6 +57,13 @@ object AttackDegree extends AttackScenario {
     scores
   }
 
+  /**
+   * A method that :
+   * 1) computes the degree of the vertices of the SCC once
+   * 2) removes one vertex at a time in descending degrees
+   * 3) runs SCC to compute the current connectivity of the component
+   * 4) computes the effect of the vertex by subtracting the connectivity before and after removing the vertex
+   */
   def degreeBasedRemoval(compVertex: HashSet[VertexId], compEdges: HashSet[(VertexId, VertexId)]): Array[(Double, Double)] = {
 
     val testA = compVertex.clone()

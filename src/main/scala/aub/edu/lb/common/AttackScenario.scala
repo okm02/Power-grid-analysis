@@ -7,7 +7,7 @@ import org.apache.spark.graphx._
  * designating the graph loss of connectivity
  */
 trait AttackScenario {
-  
+
   def attack(graph: Graph[Int, Int]): Array[Double]
 
   /**

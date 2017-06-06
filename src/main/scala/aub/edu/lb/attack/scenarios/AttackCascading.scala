@@ -11,6 +11,13 @@ import org.apache.spark.rdd.RDD.rddToPairRDDFunctions
 
 object AttackCascading extends AttackScenario {
 
+  /**
+   * A method that :
+   * 1) constructs an rdd mapping each SCC Id to a set of vertices and edges belonging to this component
+   * 2) runs BCremoval an all SCC in parrallel
+   * 3) orders the returned results based on BC score
+   * 4) compute loss in the whole graph
+   */
   def attack(graph: Graph[Int, Int]): Array[Double] = {
 
     val connectedComp = graph.connectedComponents()
@@ -44,6 +51,13 @@ object AttackCascading extends AttackScenario {
     scores
   }
 
+  /**
+   * A method that :
+   * 1) computes Betweenness Centrality of the vertices of the SCC each time a vertex is removed
+   * 2) removes one vertex at a time in descending BC scores
+   * 3) runs SCC to compute the current connectivity of the component
+   * 4) computes the effect of the vertex by subtracting the connectivity before and after removing the vertex
+   */
   private def BCBasedRemoval(compVertex: HashSet[VertexId], compEdges: HashSet[(VertexId, VertexId)]): Array[(Double, Double)] = {
 
     val testA = compVertex.clone()

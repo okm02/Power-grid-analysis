@@ -8,6 +8,11 @@ import scala.collection.mutable.ListBuffer
 
 object BetweennessCentrality {
 
+  
+  /** Implementation of Betweenneess Centrality 
+   *  takes as input a set of vertices and edges (belonging to one SCC)
+   * returns a map having each vertex flagged with it's BC score
+   */
   def computeScores(vertices: HashSet[VertexId], edges: HashSet[(VertexId, VertexId)]): HashMap[VertexId, Double] = {
 
     val scores = new HashMap[VertexId, Double]()
@@ -19,6 +24,9 @@ object BetweennessCentrality {
       val stack = Stack[VertexId]()
       val queue = Queue[VertexId]()
 
+      /**
+       * data structures initializations
+       */
       val dist = new HashMap[VertexId, Int]()
       val sigma = new HashMap[VertexId, Double]()
       val delta = new HashMap[VertexId, Double]()
@@ -36,6 +44,9 @@ object BetweennessCentrality {
         delta.put(vertex, 0.0)
       }
 
+      /**
+       * process the graph in a top-down fashion by runing a BFS
+       */
       queue.enqueue(source)
       while (!queue.isEmpty) {
 
@@ -59,6 +70,10 @@ object BetweennessCentrality {
 
       }
 
+      /**
+       * process the graph in a bottom-up manner and as you climb compute the 
+       * partial scores of each vertex
+       */
       while (!stack.isEmpty) {
         val tempSource = stack.pop()
         if (!predecessors(tempSource).isEmpty) {
