@@ -2,6 +2,9 @@ package aub.edu.lb.common
 
 import org.apache.spark.SparkContext
 import org.apache.spark.graphx._
+import scala.math.max
+import java.io.FileWriter
+import scala.io.Source
 
 object Library {
   /**
@@ -25,57 +28,54 @@ object Library {
     Graph.fromEdges(totalEdges, 1)
   }
 
-  /**
-   * code to replicate graph n times
-   * 
+  /* 
+   * code to generate replicated graph
    * 
    * def main(args: Array[String]) {
-   *
-   * val filename = "input/cleaned_graph.txt"
-   * val replicas = Array(2, 4, 8, 16, 32, 64)
-   * val graph = readFile(filename)
-   * for (replica <- replicas) {
-   * val outputFile = "output/graph" + replica + ".txt"
-   * val replicatedGraph = replicate(graph, replica,outputFile)
-   * }
-   *
-   * }
-   *
-   * def readFile(filename: String): Array[(Long, Long)] = {
-   * val size = 679965
-   * val graph = new Array[(Long, Long)](size)
-   * var i = 0
-   * for (line <- Source.fromFile(filename).getLines()) {
-   * val splitLine = line.split(" ").map(_.toInt)
-   * val src = splitLine(0)
-   * val dst = splitLine(1)
-   * graph(i) = (src, dst)
-   * i = i + 1
-   * }
-   * graph
-   * }
-   *
-   * def replicate(graph: Array[(Long, Long)], numOfRep: Int,outputFile:String) {
-   *
-   *
-   * val maxSrc = graph.maxBy(f => f._1)._1
-   * val maxDst = graph.maxBy(f => f._2)._2
-   * val maxBoth = max(maxSrc, maxDst) + 1
-   * for (currentReplica<-0 until numOfRep){
-   * val localMax = maxBoth * currentReplica
-   * val rep = graph.map(f => (f._1+localMax,f._2 + localMax))
-   * printResult(rep,outputFile)
-   * }
-   * }
-   *
-   * def printResult(result: Array[(Long, Long)], outputFile: String) {
-   *
-   * val printStream = new FileWriter(outputFile,true)
-   * for (i <- 0 until result.size) {
-   * printStream.write(result(i)._1 + " " + result(i)._2 + "\n")
-   * }
-   * printStream.close()
-   * }
-   */
+
+    val filename = "input/graph1.txt"
+    val replicas = Array(2, 4, 8, 16, 32, 64)
+    val graph = readFile(filename)
+    for (replica <- replicas) {
+      val outputFile = "input/graph" + replica + ".txt"
+      val replicatedGraph = replicate(graph, replica, outputFile)
+    }
+
+  }
+
+  def readFile(filename: String): Array[(Long, Long)] = {
+    val size = 679965
+    val graph = new Array[(Long, Long)](size)
+    var i = 0
+    for (line <- Source.fromFile(filename).getLines()) {
+      val splitLine = line.split(" ").map(_.toInt)
+      val src = splitLine(0)
+      val dst = splitLine(1)
+      graph(i) = (src, dst)
+      i = i + 1
+    }
+    graph
+  }
+
+  def replicate(graph: Array[(Long, Long)], numOfRep: Int, outputFile: String) {
+
+    val maxSrc = graph.maxBy(f => f._1)._1
+    val maxDst = graph.maxBy(f => f._2)._2
+    val maxBoth = max(maxSrc, maxDst) + 1
+    for (currentReplica <- 0 until numOfRep) {
+      val localMax = maxBoth * currentReplica
+      val rep = graph.map(f => (f._1 + localMax, f._2 + localMax))
+      printResult(rep, outputFile)
+    }
+  }
+
+  def printResult(result: Array[(Long, Long)], outputFile: String) {
+
+    val printStream = new FileWriter(outputFile, true)
+    for (i <- 0 until result.size) {
+      printStream.write(result(i)._1 + " " + result(i)._2 + "\n")
+    }
+    printStream.close()
+  }*/
 
 }
