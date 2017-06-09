@@ -19,7 +19,7 @@ object AttackRandom extends AttackScenario {
    * 3) randomly shuffles the returned results
    * 4) compute loss in the whole graph
    */
-  def attack(graph: Graph[Int, Int]): Array[Double] = {
+  def attack(graph: Graph[Int, Int]): Array[(VertexId,Double)] = {
 
     val connectedComp = graph.connectedComponents()
     var changeStructureV = connectedComp.vertices.map(f => (f._2, {
@@ -49,9 +49,9 @@ object AttackRandom extends AttackScenario {
     removalScores = (random.shuffle(removalScores.toList)).toArray
 
     for (i <- 1 until removalScores.length) {
-      removalScores(i) = removalScores(i) + removalScores(i - 1)
+      removalScores(i) =(removalScores(i)._1, removalScores(i)._2 + removalScores(i - 1)._2)
     }
-    removalScores = removalScores.map(f => (f / totalGraphConn.toDouble) * 100.0)
+    removalScores = removalScores.map(f => (f._1,(f._2 / totalGraphConn.toDouble) * 100.0))
 
     removalScores
 
@@ -64,7 +64,7 @@ object AttackRandom extends AttackScenario {
    * 3) runs SCC to compute the current connectivity of the component
    * 4) computes the effect of the vertex by subtracting the connectivity before and after removing the vertex
    */
-  def RandomBasedRemoval(compVertex: HashSet[VertexId], compEdges: HashSet[(VertexId, VertexId)]): Array[Double] = {
+  def RandomBasedRemoval(compVertex: HashSet[VertexId], compEdges: HashSet[(VertexId, VertexId)]): Array[(VertexId,Double)] = {
 
     val testA = compVertex.clone()
     val testB = compEdges.clone()
@@ -72,7 +72,7 @@ object AttackRandom extends AttackScenario {
     val temp = testA.toArray
     val vertices = temp.to[ArrayBuffer]
 
-    val attacks = new Array[Double](compVertex.size)
+    val attacks = new Array[(VertexId,Double)](compVertex.size)
     val random = new Random
     for (i <- 0 until attacks.length) {
 
@@ -89,7 +89,7 @@ object AttackRandom extends AttackScenario {
       val removed = SCC.computeComponents(testA, testB)
       val loss = (componentConnectivity - removed.toDouble)
       componentConnectivity = removed.toDouble
-      attacks(i) = loss
+      attacks(i) = (maxId,loss)
 
     }
     attacks

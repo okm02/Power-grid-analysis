@@ -8,18 +8,18 @@ import org.apache.spark.graphx._
  */
 trait AttackScenario {
 
-  def attack(graph: Graph[Int, Int]): Array[Double]
+  def attack(graph: Graph[Int, Int]): Array[(VertexId,Double)]
 
   /**
    * It mergers two arrays based on nodes' scores (e.g., degree, betweeness centrality)
    */
-  def append(a: Array[(Double, Double)], b: Array[(Double, Double)]): Array[(Double, Double)] = {
+  def append(a: Array[(VertexId,Double, Double)], b: Array[(VertexId,Double, Double)]): Array[(VertexId,Double, Double)] = {
     var i = 0
     var j = 0
     var k = 0
-    val total = new Array[(Double, Double)](a.length + b.length)
+    val total = new Array[(VertexId,Double, Double)](a.length + b.length)
     while (i < a.length && j < b.length) {
-      if (a(i)._1 > b(j)._1) {
+      if (a(i)._2 > b(j)._2) {
         total(k) = a(i)
         i = i + 1
       } else {

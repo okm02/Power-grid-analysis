@@ -20,7 +20,7 @@ object AttackDegree extends AttackScenario {
    * 3) orders the returned results based on the degree of each vertex
    * 4) compute loss in the whole graph
    */
-  def attack(graph: Graph[Int, Int]): Array[Double] = {
+  def attack(graph: Graph[Int, Int]): Array[(VertexId,Double)] = {
 
     val connectedComp = graph.connectedComponents() // compute scc for graph
 
@@ -48,11 +48,11 @@ object AttackDegree extends AttackScenario {
     val exploitNetwork = compGraphStruct.map(f => degreeBasedRemoval(f._2._1, f._2._2))
     var removalScores = exploitNetwork.reduce((a, b) => append(a, b))
 
-    var scores = removalScores.map(f => f._2)
+    var scores = removalScores.map(f => (f._1,f._3))
     for (i <- 1 until scores.length) {
-      scores(i) = scores(i) + scores(i - 1)
+      scores(i) = (scores(i)._1,scores(i)._2 + scores(i - 1)._2)
     }
-    scores = scores.map(f => (f / totalGraphConn.toDouble) * 100.0)
+    scores = scores.map(f => (f._1,(f._2 / totalGraphConn.toDouble) * 100.0))
 
     scores
   }
@@ -64,7 +64,7 @@ object AttackDegree extends AttackScenario {
    * 3) runs SCC to compute the current connectivity of the component
    * 4) computes the effect of the vertex by subtracting the connectivity before and after removing the vertex
    */
-  def degreeBasedRemoval(compVertex: HashSet[VertexId], compEdges: HashSet[(VertexId, VertexId)]): Array[(Double, Double)] = {
+  def degreeBasedRemoval(compVertex: HashSet[VertexId], compEdges: HashSet[(VertexId, VertexId)]): Array[(VertexId,Double, Double)] = {
 
     val testA = compVertex.clone()
     val testB = compEdges.clone()
@@ -80,7 +80,7 @@ object AttackDegree extends AttackScenario {
     }
     degrees = degrees.sortBy(f => f._2).reverse
 
-    val attacks = new Array[(Double, Double)](compVertex.size)
+    val attacks = new Array[(VertexId,Double, Double)](compVertex.size)
     for (i <- 0 until degrees.length) {
 
       val maxId = degrees(i)._1
@@ -94,7 +94,7 @@ object AttackDegree extends AttackScenario {
 
       val loss = (componentConnectivity - removed.toDouble)
       componentConnectivity = removed.toDouble
-      attacks(i) = (degrees(i)._2, loss)
+      attacks(i) = (maxId,degrees(i)._2, loss)
     }
     attacks
   }

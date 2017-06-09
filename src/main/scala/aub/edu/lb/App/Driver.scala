@@ -25,6 +25,7 @@ object Driver {
         val sc = new SparkContext(conf)
         sc.setLogLevel("ERROR")
         println("Thread: " + thread)
+
         for (partitions <- 4 to 32 by 2) {
           val time = bench(sc, attackScenario, partitions, inputFileGraph, null, false)
           ps.write(partitions + " " + time + "\n")

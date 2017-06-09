@@ -18,7 +18,7 @@ object AttackBC extends AttackScenario {
    * 3) orders the returned results based on BC score
    * 4) compute loss in the whole graph
    */
-  def attack(graph: Graph[Int, Int]): Array[Double] = {
+  def attack(graph: Graph[Int, Int]): Array[(VertexId,Double)] = {
 
     val connectedComp = graph.connectedComponents()
     var changeStructureV = connectedComp.vertices.map(f => (f._2, {
@@ -44,11 +44,11 @@ object AttackBC extends AttackScenario {
 
     val removalScores = exploitNetwork.reduce((a, b) => append(a, b))
 
-    var scores = removalScores.map(f => f._2)
+    var scores = removalScores.map(f => (f._1,f._3))
     for (i <- 1 until scores.length) {
-      scores(i) = scores(i) + scores(i - 1)
+      scores(i) = (scores(i)._1,scores(i)._2 + scores(i - 1)._2)
     }
-    scores = scores.map(f => (f / totalGraphConn.toDouble) * 100.0)
+    scores = scores.map(f => (f._1,(f._2 / totalGraphConn.toDouble) * 100.0))
 
     scores
   }
@@ -60,13 +60,13 @@ object AttackBC extends AttackScenario {
    * 3) runs SCC to compute the current connectivity of the component
    * 4) computes the effect of the vertex by subtracting the connectivity before and after removing the vertex
    */
-  private def BCBasedRemoval(compId: VertexId, compVertex: HashSet[VertexId], compEdges: HashSet[(VertexId, VertexId)]): Array[(Double, Double)] = {
+  private def BCBasedRemoval(compId: VertexId, compVertex: HashSet[VertexId], compEdges: HashSet[(VertexId, VertexId)]): Array[(VertexId,Double, Double)] = {
 
     val testA = compVertex.clone()
     val testB = compEdges.clone()
     var componentConnectivity = (compVertex.size * compVertex.size).toDouble
 
-    val attacks = new Array[(Double, Double)](compVertex.size)
+    val attacks = new Array[(VertexId,Double, Double)](compVertex.size)
     val scoresMap = BetweennessCentrality.computeScores(testA, testB)
 
     for (i <- 0 until attacks.length) {
@@ -84,7 +84,7 @@ object AttackBC extends AttackScenario {
 
       val loss = (componentConnectivity - removed.toDouble)
       componentConnectivity = removed.toDouble
-      attacks(i) = (tuple._2, loss)
+      attacks(i) = (maxId,tuple._2, loss)
     }
 
     attacks
