@@ -1,0 +1,69 @@
+\section{Materials and Methods}
+We consider four scenarios.
+
+\begin{lstlisting}[language=java]
+attackGraph(Graph graph) {
+   lossBefore = computeConnectivity(graph, null);
+   for(i = 0 until |V|) {
+      Vertex v = selectVictimVertex();
+      remove(v);
+      lostAfter = computeConnectivity(graph);
+      loss = lossBefore - lossAfter
+      lossBefore = lossAfter
+}
+
+computeConnectivity(Graph graph, Vertex victim) {
+   components = computeSCC(graph, victim)
+   connectivity = 0
+   for(component in components) {
+         if(component.size > 2) 
+             connectivity += size * size
+         else connectivity += size
+   }
+}
+\end{lstlisting} 
+
+The victim vertex is computed according to the following scenarios: 
+\begin{itemize}
+\item Random: a victim vertex is randomly selected
+\item Degree-based: remove the vertex in descending order w.r.t. degree of the nodes. 
+\item Betweenness Centrality: remove the vertex in descending order w.r.t. betweeness centrality of the nodes.
+\item Cascanding: Similar to the betweeness centrality scenario, however, the betweeness centrality is computed at each iteration (i.e., after removal of a victim vertex)
+\end{itemize}
+
+We provide an efficient Spark-based implementation of the all the above scenarios. 
+
+\begin{enumerate}
+\item Given a graph and number of partitions, we build its corresponding RDD
+\item We run SCC on the Graph RDD
+\item For each component, we run the corresponding scenario by selecting a victim node and removing it. This can be done using a map function.
+\item Each map computes the local loss provided removing the node with the higher impact.
+\item Order the components w.r.t. corresponding scenario. In case of random scenario we shuffle them randomly. 
+\item The loss is then iteratively accumulated.
+\end{enumerate}
+
+\begin{lstlisting}[language=java]
+attackGraph(Graph graph) {
+   lossBefore = computeConnectivity(graph, null);
+   for(i = 0 until |V|) {
+      Vertex v = selectVictimVertex();
+      remove(v);
+      lostAfter = computeConnectivity(graph);
+      loss = lossBefore - lossAfter
+      lossBefore = lossAfter
+}
+
+computeConnectivity(Graph graph, Vertex victim) {
+   components = computeSCC(graph, victim)
+   connectivity = 0
+   for(component in components) {
+         if(component.size > 2) 
+             connectivity += size * size
+         else connectivity += size
+   }
+}
+\end{lstlisting} 
+
+
+
+

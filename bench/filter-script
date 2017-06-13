@@ -1,0 +1,5 @@
+sed 's/.$//' LossRandom.txt | awk -F"," '{print $2}' > lossr
+sed 's/.$//' LossBC.txt | awk -F"," '{print $2}' > lossb
+sed 's/.$//' LossDegree.txt | awk -F"," '{print $2}' > lossd
+sed 's/.$//' LossCascading.txt | awk -F"," '{print $2}' > lossc
+
