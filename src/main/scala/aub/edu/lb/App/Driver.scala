@@ -10,15 +10,17 @@ import aub.edu.lb.attack.scenarios._
 object Driver {
 
   /**
-   * Main that automates the benchmarks by runing different scenarios
+   * Main that automates the benchmarks by running different scenarios
    * on multiple threads and multiple rdd partitions
    */
   def main(args: Array[String]) {
+    val graphReplica = 1
     val threads = Array(64, 32, 16, 8, 4, 2, 1)
-    val inputFileGraph = "input/graph.txt"
+    val inputFileGraph = "input/graph" + graphReplica + ".txt"
     val attackScenarios = Array(AttackDegree, AttackRandom, AttackBC, AttackCascading)
+    val outputDirectory  = "bench/graph" + graphReplica
     for (attackScenario <- attackScenarios) {
-      val ps = new PrintWriter(new File("bench/benchmarks" + attackScenario.toString + ".txt"))
+      val ps = new PrintWriter(new File( outputDirectory + "/benchmarks" + attackScenario.toString + ".txt"))
       for (thread <- threads) {
         ps.write("Number of Threads " + thread + "\n")
         val conf = new SparkConf().setAppName("Attack").setMaster("local[" + thread + "]")
