@@ -1,3 +1,4 @@
+\usepackage{xcolor}% http://ctan.org/pkg/xcolor
 \usepackage{graphicx}
 \usepackage[center]{subfigure}
 \usepackage{bigints}
@@ -8,15 +9,33 @@
 \usepackage{tikz}
 \usepackage{standalone}
 \usepackage{mathtools}
-
 \usepackage{amsfonts}
 \usepackage{algorithm}
 \usepackage{algorithmic}
 \usepackage{amsmath}
 \usepackage{bm}
 \usepackage{color}
-\usepackage{xcolor}% http://ctan.org/pkg/xcolor
 
+\usepackage{colortbl}
+
+\makeatletter
+
+    \def\CT@@do@color{%
+      \global\let\CT@do@color\relax
+            \@tempdima\wd\z@
+            \advance\@tempdima\@tempdimb
+            \advance\@tempdima\@tempdimc
+    \advance\@tempdimb\tabcolsep
+    \advance\@tempdimc\tabcolsep
+    \advance\@tempdima2\tabcolsep
+            \kern-\@tempdimb
+            \leaders\vrule
+    %^^A                     \@height\p@\@depth\p@
+                    \hskip\@tempdima\@plus  1fill
+            \kern-\@tempdimc
+            \hskip-\wd\z@ \@plus -1fill }
+    \makeatother
+    
 
 
 

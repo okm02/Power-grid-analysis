@@ -41,64 +41,18 @@ $\mathtt{bc}_G(v) = \mathtt{bc}_{G_i}(v)$, where $\mathtt{SCC}(G) = \{G_1, \ldot
 \subsection{Spark-based Implementation}
 We provide an efficient Spark-based implementation of the all the above scenarios. Spark allows to parallelize and distributed computations on several nodes. 
 
+
 Spark~\cite{spark} is new programming model supported by an execution engine for big data processing. Spark is based on RDD (Resilient Distributed Data Set). RDDs are big parallel collections that can be distributed across a cluster. RDDs are created through parallel transformations (e.g., map, group by, filter, join, create from file systems). Moreover, RDDs can be cached (in-memory) by allowing to keep data sets of interest in Memory across operations and thus contribute to a substantial speedup. At the same time, Spark uses lineage to support fault tolerance, i.e., record all the operations/transformations that yield to create RDDs from a source data. That is, in case of failure, an RDD can be reconstructed given the transformation functions yielding to that RDD. Additionally, after creating RDDs, it is possible to do analytics on them by running actions on them such as count, reduce, collect and save. Note that all operations/transformations are lazy until you run an action. Then, the Spark execution engine pipelines operations and finds an execution plan. GraphX~\cite{graphx} is a platform built on top of Spark that provides APIs for parallel and distributed processing on large graphs. 
 
+
+The spark-based implementation is done as follows:
 \begin{itemize}
-\item Given a file containing information about the graph and a number of partitions, we build the corresponding graph RDD. 
+\item Given a file (read from local or distributed file system, i.e., HDFS) containing information about the graph and a number of partitions, we build the corresponding graph RDD. 
 \item We compute the strongly connected components on the graph RDD. 
 \item We create an RDD, \texttt{rddSCC} where each item corresponds to a strongly connected component. 
-\item We define a map function on \texttt{rddSCC} that selects a victim node on each local item of \texttt{rddSCC}.  
+\item On each item \texttt{rddSCC} (i.e., each strongly connected component), we iteratively identifies victim nodes (and locally update the corresponding component) until all the nodes are identified. The output of each step produces an array per item containing the losses in a decreasing order that correspond to the nodes of that item. Note that, the loss is computed and affected locally on each item. 
+\item We define a reduce operation that merge-sorts all the generated arrays and sequentially removes the nodes in a decreasing order. The output of this step produces one array containing the global losses (in a decreasing order) corresponding to all the nodes. Global losses are computed by by accumulating the sum of all the previous items. 
 \end{itemize}
-
-\begin{lstlisting}[language=java]
-attackGraph(File graph) {
-   build Graph RDD graphRDD from the input file
-   
-   compute Strongly Connected Components of graphRDD
-   
-   build an RDD 
-   
-   lossBefore = computeConnectivity(graph, null);
-   for(i = 0 until |V|) {
-      Vertex v = selectVictimVertex();
-      remove(v);
-      lostAfter = computeConnectivity(graph);
-      loss = lossBefore - lossAfter
-      lossBefore = lossAfter
-}
-\end{lstlisting}
-
-
-\begin{enumerate}
-\item Given a graph and number of partitions, we build its corresponding RDD
-\item We run SCC on the Graph RDD
-\item For each component, we run the corresponding scenario by selecting a victim node and removing it. This can be done using a map function.
-\item Each map computes the local loss provided removing the node with the higher impact.
-\item Order the components w.r.t. corresponding scenario. In case of random scenario we shuffle them randomly. 
-\item The loss is then iteratively accumulated.
-\end{enumerate}
-
-\begin{lstlisting}[language=java]
-attackGraph(Graph graph) {
-   lossBefore = computeConnectivity(graph, null);
-   for(i = 0 until |V|) {
-      Vertex v = selectVictimVertex();
-      remove(v);
-      lostAfter = computeConnectivity(graph);
-      loss = lossBefore - lossAfter
-      lossBefore = lossAfter
-}
-
-computeConnectivity(Graph graph, Vertex victim) {
-   components = computeSCC(graph, victim)
-   connectivity = 0
-   for(component in components) {
-         if(component.size > 2) 
-             connectivity += size * size
-         else connectivity += size
-   }
-}
-\end{lstlisting} 
 
 
 
