@@ -1,8 +1,63 @@
 \section{Materials and Methods}
-We consider four scenarios.
+Given an undirected graph $G=(V,E)$, we define its connectivity as follows:
+
+$$
+\mathtt{connectivity}(G) = \sum_{v \in V} \mid \mathtt{reachable}(v) \mid,
+$$ where $\mathtt{reachable}(v)$ is all the reachable nodes from $v$.
+
+Given a node $x$, we define the loss of a graph $G$ with respect to $x$ as follows:
+$$
+\mathtt{loss}(G, x) = \mathtt{connectivity}(G) - \mathtt{connectivity}(G \setminus x)
+$$
+where $G \setminus x$ is a graph defined by removing vertex $x$ in $G$ and all its edges. 
+
+We denote by $\mathtt{SCC}(G) = \{G_1, \ldots, G_n\}$ to be the maximal strongly connected components of $G$. 
+We have $\mathtt{loss}(G, x) = \mathtt{loss}(G_i,x) + \sum_{j \neq i} \mathtt{connectivity}(G_j)$, where $x \in V_i$, and  $\mathtt{connectivity}(G_j) \,=\, \mid V_j \mid \times \mid V_j  - 1\mid$.
 
 \begin{lstlisting}[language=java]
 attackGraph(Graph graph) {
+   for(i = 0 until |V|) {
+      select victim vertex v
+      remove vertex v
+      update loss with respect to v
+   }
+}
+\end{lstlisting}
+
+We select a victim vertex according to one of the following four scenarios: 
+\begin{itemize}
+\item \emph{Random}: a random vertex is selected.
+\item \emph{Degree-based}: the vertex with the highest degree is selected. 
+\item \emph{Betweenness Centrality}: the vertex with the highest betweeness centrality is selected. The betweenss centrality of the nodes is only computed once (i.e., it will not be updated after removing a vertex). 
+\item \emph{Cascanding}: Similar to the betweeness centrality scenario, however, the betweeness centrality of the nodes is updated at each iteration (i.e., after removal of a victim vertex).
+\end{itemize}
+
+Given a graph $G$, the betweeness centrality of a node $v$ is equal to $\mathtt{bc}_G(v) = \sum_{s \neq v \neq t} \frac{\sigma_{st}(v)}{\sigma_{st}}$, where  
+$\sigma_{st}$ is the total number of shortest paths from node 
+$s$ to node $t$ and $\sigma_{st}(v)$ is the number of those paths that pass through $v$. Clearly, we have 
+$\mathtt{bc}_G(v) = \mathtt{bc}_{G_i}(v)$, where $\mathtt{SCC}(G) = \{G_1, \ldots, G_n\}$  and $v \in G_i$. 
+
+
+\subsection{Spark-based Implementation}
+We provide an efficient Spark-based implementation of the all the above scenarios. Spark allows to parallelize and distributed computations on several nodes. 
+
+Spark~\cite{spark} is new programming model supported by an execution engine for big data processing. Spark is based on RDD (Resilient Distributed Data Set). RDDs are big parallel collections that can be distributed across a cluster. RDDs are created through parallel transformations (e.g., map, group by, filter, join, create from file systems). Moreover, RDDs can be cached (in-memory) by allowing to keep data sets of interest in Memory across operations and thus contribute to a substantial speedup. At the same time, Spark uses lineage to support fault tolerance, i.e., record all the operations/transformations that yield to create RDDs from a source data. That is, in case of failure, an RDD can be reconstructed given the transformation functions yielding to that RDD. Additionally, after creating RDDs, it is possible to do analytics on them by running actions on them such as count, reduce, collect and save. Note that all operations/transformations are lazy until you run an action. Then, the Spark execution engine pipelines operations and finds an execution plan. GraphX~\cite{graphx} is a platform built on top of Spark that provides APIs for parallel and distributed processing on large graphs. 
+
+\begin{itemize}
+\item Given a file containing information about the graph and a number of partitions, we build the corresponding graph RDD. 
+\item We compute the strongly connected components on the graph RDD. 
+\item We create an RDD, \texttt{rddSCC} where each item corresponds to a strongly connected component. 
+\item We define a map function on \texttt{rddSCC} that selects a victim node on each local item of \texttt{rddSCC}.  
+\end{itemize}
+
+\begin{lstlisting}[language=java]
+attackGraph(File graph) {
+   build Graph RDD graphRDD from the input file
+   
+   compute Strongly Connected Components of graphRDD
+   
+   build an RDD 
+   
    lossBefore = computeConnectivity(graph, null);
    for(i = 0 until |V|) {
       Vertex v = selectVictimVertex();
@@ -11,27 +66,8 @@ attackGraph(Graph graph) {
       loss = lossBefore - lossAfter
       lossBefore = lossAfter
 }
+\end{lstlisting}
 
-computeConnectivity(Graph graph, Vertex victim) {
-   components = computeSCC(graph, victim)
-   connectivity = 0
-   for(component in components) {
-         if(component.size > 2) 
-             connectivity += size * size
-         else connectivity += size
-   }
-}
-\end{lstlisting} 
-
-The victim vertex is computed according to the following scenarios: 
-\begin{itemize}
-\item Random: a victim vertex is randomly selected
-\item Degree-based: remove the vertex in descending order w.r.t. degree of the nodes. 
-\item Betweenness Centrality: remove the vertex in descending order w.r.t. betweeness centrality of the nodes.
-\item Cascanding: Similar to the betweeness centrality scenario, however, the betweeness centrality is computed at each iteration (i.e., after removal of a victim vertex)
-\end{itemize}
-
-We provide an efficient Spark-based implementation of the all the above scenarios. 
 
 \begin{enumerate}
 \item Given a graph and number of partitions, we build its corresponding RDD
