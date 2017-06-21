@@ -1,4 +1,5 @@
 set terminal postscript dashed color lw 3 "Helvetica" 24
+set ylabel offset 2,0,0
 set output "time-bc-1.ps"
 set xrange [0:64]
 set xtics (2, 4, 8, 16, 32, 64) 
@@ -130,6 +131,7 @@ plot "time-graph1" using 1:5 title "BC-32"  with lines,\
 "time-graph1" using 1:13 title "D-32"  with lines,\
 "time-graph4" using 1:17 title "R-32"  with lines
 
+unset xrange 
 set output "loss-all.ps"
 #set key at 10, 2.1  
 #set size 1.0, 0.8
