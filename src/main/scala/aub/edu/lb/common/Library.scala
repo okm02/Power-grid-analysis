@@ -29,10 +29,13 @@ object Library {
   }
 
   /* 
-   * code to generate replicated graph
-   * 
-   * def main(args: Array[String]) {
+   * code to generate replicated graph (for benchmarks)
+   */
+  def main(args: Array[String]) {
+     // replicateGraphGenerationBench();
+  }
 
+  def replicateGraphGenerationBench() {
     val filename = "input/graph1.txt"
     val replicas = Array(2, 4, 8, 16, 32, 64)
     val graph = readFile(filename)
@@ -40,7 +43,6 @@ object Library {
       val outputFile = "input/graph" + replica + ".txt"
       val replicatedGraph = replicate(graph, replica, outputFile)
     }
-
   }
 
   def readFile(filename: String): Array[(Long, Long)] = {
@@ -76,6 +78,6 @@ object Library {
       printStream.write(result(i)._1 + " " + result(i)._2 + "\n")
     }
     printStream.close()
-  }*/
+  }
 
 }
