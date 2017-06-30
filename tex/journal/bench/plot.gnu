@@ -2,15 +2,17 @@ set terminal postscript dashed color lw 3 "Helvetica" 24
 set ylabel offset 2,0,0
 set output "degree-counter.ps"
 set xlabel "Degree"
-set xtics font ", 14"
-set ytics font ", 14"  
-set ylabel "Number of Nodes"
+set xtics font ", 16"
+set ytics font ", 16"  
+set ylabel "Percentage of Nodes"
 set boxwidth 0.5
 set style fill solid
-plot '../../../bench/outputDegreeCounter.txt' using 1:2:xtic(1) title "" with boxes  
+plot '../../../bench/outputDegreeCounter.txt' using 1:3:xtic(1) title "" with boxes  
 
+reset 
 
-#set terminal postscript dashed color lw 3 "Helvetica" 24
+set terminal postscript dashed color lw 3 "Helvetica" 24
+set ylabel offset 2,0,0
 set output "time-bc-1.ps"
 set xrange [0:64]
 set xtics (2, 4, 8, 16, 32, 64) 
