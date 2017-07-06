@@ -1,4 +1,9 @@
 \section{Materials and Methods}
+\label{methods}
+We begin by developing a global structural understanding of the Lebanese power grid that reveals a certain level of decentralization via numerous strongly connected components, which, surprisingly, may be perceived as a sign of modest resilience against overload or attacks. 
+We then simulate the failures by node removal sorted in a random or a particular order given by the nodes with the highest betweenness, nodes with the highest betweenness in cascading order resulting from their dynamical removal, the nodes with the highest loads. 
+%We develop an Apache Spark implementation that simulates random and cascading sequences of events by which energy centers in Lebanon can be exposed and are at risk. Spark is an Apache project currently dubbed as ¡°lightning fast cluster computing¡±, and allows to deploy jobs on distributed and parallel systems \cite{spark}. It has become the fastest open source engine for performing major computations like sorting, graph algorithms, and machine learning, on data of the order of petabytes. 
+
 Given an undirected graph $G=(V,E)$, we define its connectivity as follows:
 
 $$

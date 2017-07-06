@@ -1,27 +1,30 @@
 % Created using Papers on Tue, 06 Jun 2017.
 %% http://papersapp.com/papers/
+\bibitem{Biss04}
+R. H. Bisseling. {\it Parallel Scientific Computation: A structured
+Approach using BSP and MPI}, Oxford University Press, NY, 2004.
 
+\bibitem{McColl2}
 
+J. M. D. Hill, W. F. McColl, D. C. Stefanescu, M. W. Goudrea,
+K. Lang, S. B. Rao, T. Suel, T. Tsantilas, R. H. Bisseling. BSPlib:
+The BSP Programming Library. {\it Parallel Computing}, 24: 1947--1980, 1998.
+\bibitem{Valiant}
 
-@book{Biss04,
-  title = {Parallel Scientific Computation},
-  subtitle = {A structured Approach using BSP and MPI},
-  author = {Bisseling, R. H.},
-  year = {2004}, 
-  PUBLISHER = {Oxford University Press},
-}
+L. G. Valiant. A Bridging Model for Parallel Computation. {\it
+Communications of the ACM}, 33: 103--111, 1990.
 
-@article{McColl2,
- author = {Hill, J. M. D.  and McColl, W. F. and Stefanescu, D. C.  and Goudrea, M. W. and Lang, K. and Rao, S. B. and Suel, T. and Tsantilas, T. and Bisseling, R. H.},
- title = {BSPlib: The BSP Programming Library},
- journal = {Parallel Computing},
+@article{,
+ author = {},
+ title = {},
+ journal = {},
  issue_date = {},
- volume = {24},
+ volume = {},
  number = {},
  month = ,
- year = {1998},
+ year = {},
  issn = {},
- pages = {1947--1980},
+ pages = {},
  numpages = {},
  url = {},
  doi = {},
@@ -30,17 +33,36 @@
  address = {},
 } 
 
-@article{Valiant,
- author = {Valiant, L. G.},
- title = {A Bridging Model for Parallel Computation},
- journal = {Communications of the ACM},
+@article{,
+ author = {},
+ title = {},
+ journal = {},
  issue_date = {},
- volume = {33},
+ volume = {},
  number = {},
  month = ,
- year = {1990},
+ year = {},
  issn = {},
- pages = {103--111},
+ pages = {},
+ numpages = {},
+ url = {},
+ doi = {},
+ acmid = {},
+ publisher = {},
+ address = {},
+} 
+
+@article{,
+ author = {},
+ title = {},
+ journal = {},
+ issue_date = {},
+ volume = {},
+ number = {},
+ month = ,
+ year = {},
+ issn = {},
+ pages = {},
  numpages = {},
  url = {},
  doi = {},
