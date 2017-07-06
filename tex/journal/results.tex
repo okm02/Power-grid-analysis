@@ -2,8 +2,10 @@
 \label{results}
 Our own Spark implementation of contingency analysis executes in real-time for the entire power grid, achieving a speed-up of ? on ? processors. We conclude with a spatial understanding of the hotspots on Lebanese soil where energy centers can be exposed and are at risk, using a spatial correlation supported by a binary search tree. The amenability of our work to big data processing makes it extendable to larger networks of networks, towards a fuller understanding of resilence at many vital levels beyond the power grid. Examples are as communications network, Internet networks, transportation networks, hospitals and medical centers networks, to name a few.
 
-\subsection{Spark algorithm}
+~
 
+
+TODO - discuss the benchmarks: 
 \begin{itemize}
 \item Property of the graph (number of components, node per component)
 
@@ -36,11 +38,12 @@ Our own Spark implementation of contingency analysis executes in real-time for t
 \end{figure}
 
 
-\onecolumngrid
-\begin{table*}
+\begin{table*}[t]
+\begin{minipage}[b]{\textwidth}
 \label{tab:graph1}
 \caption{graph1.. todo}
 {\small
+\centering
 \begin{tabular}{||c||c|c|c|c||c|c|c|c||c|c|c|c||c|c|c|c|}
 \hline
 \textbf{Threads}	&\cellcolor{black!10}BC-4&	\cellcolor{black!10}BC-8	&\cellcolor{black!10}BC-16	&\cellcolor{black!10}BC-32&	\cellcolor{black!10}C-4	&\cellcolor{black!10}C-8&	\cellcolor{black!10}C-16&	\cellcolor{black!10}C-32&	\cellcolor{black!10}D-4&	\cellcolor{black!10}D-8	&\cellcolor{black!10}D-16&\cellcolor{black!10}	D-32&	\cellcolor{black!10}R-4	&\cellcolor{black!10}R-8&	\cellcolor{black!10}R-16&	\cellcolor{black!10}R-32 \\ \hline \hline
@@ -53,9 +56,12 @@ Our own Spark implementation of contingency analysis executes in real-time for t
 1&		161	&167	&219	&423	&312	&320	&369	&543	&124	&127	&187	&384	&104	&114	&174	&344	\\ \hline
 \end{tabular}
 }
+\end{minipage}
 \end{table*}
-%
-\begin{table*}
+
+
+\begin{table*}[t]
+\begin{minipage}[b]{\textwidth}
 \label{tab:graph2}
 \caption{graph 2.. todo}
 {\small
@@ -71,9 +77,12 @@ Our own Spark implementation of contingency analysis executes in real-time for t
 1		&452&357	&371	&525	&761	&804	&793	&969	&355	&281	&286	&434	&196	&201	&230	&402 \\ \hline		
 \end{tabular}
 }
+\end{minipage}
 \end{table*}
-%
-\begin{table*}
+
+
+\begin{table*}[t]
+\begin{minipage}[b]{\textwidth}
 \label{tab:graph4}
 \caption{graph 4.. todo}
 {\small
@@ -89,6 +98,5 @@ Our own Spark implementation of contingency analysis executes in real-time for t
 1		&1626&902&879 &1021 &2156 &1784 &1577 &1754 &1584 &905 &730 &783& 533 &458 &456 &647 \\ \hline
 \end{tabular}
 }
+\end{minipage}
 \end{table*}
-\twocolumngrid
-

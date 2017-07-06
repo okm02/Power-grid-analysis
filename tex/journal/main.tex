@@ -1,40 +1,12 @@
-\documentclass[twocolumn,showpacs,preprintnumbers,amsmath,amssymb,floatfix]{revtex4}
-\usepackage{graphicx}
-%\usepackage{listings}
+\documentclass[twocolumn,showpacs,preprintnumbers,amsmath,amssymb,floatfix]{revtex4-1}
+\input{packages}
 
-\usepackage[center]{subfigure}
-\usepackage{bigints}
-\usepackage{cancel}
-\usepackage{amsmath}
-%\usepackage{natbib}
-\usepackage{mathbbol}
-\usepackage[center]{subfigure}
-\usepackage{tikz}
-\usepackage{standalone}
-%\usepackage{stackengine}
 
-%{} %
-\usepackage{mathtools}
-\DeclarePairedDelimiter{\ceil}{\lceil}{\rceil}
-%\newcommand \rt {\right}
-%\newcommand \lt {\left}
-%\newcommand \be {\begin{equation}}
-%\newcommand \ee {\end{equation}}
-%\newcommand \ben {\begin{eqnarray}}
-%\newcommand \een {\end{eqnarray}}
-%\newcommand \nline {\nonumber \\}
-%\newcommand \free {${\cal F}$\ }
-%\newcommand \dr {\delta\rho}
-%\newcommand \disp {\omega(\nabla^2)}
-%\newcommand \aver {\bar{\rho}}
-%\newcommand \liqr {\rho_{\ell}}
 \begin{document}
-\author{Chadi Abdallah $^{1}$, Fatima Abu Salem $^{2}$, Mohamad  Jaber $^{2}$, Omar Mehio $^{2}$, and Sara Najem $^{1}$}
+\author{Chadi Abdallah$^{1}$, Fatima Abu Salem$^{2}$, Mohamad  Jaber$^{2}$, Omar Mehio$^{2}$, and Sara Najem$^{1}$}
 %
 \affiliation{$^1$ National Center for Remote Sensing, National Council for Scientific Research (CNRS), Riad al Soloh, 1107 2260, Beirut, Lebanon}
 \affiliation{$^2$ Computer Science Department, American University of Beirut, Beirut, Lebanon}
-
-
 
 \date{\today}
 
@@ -49,19 +21,13 @@
 \input{intro}
 
 \input{background}
+
 \input{methods}
+
 \input{results}
+
 \input{conclusion}
 
 
-% \begin{figure}[!htp]%
-%%\vspace{-1.5cm}
-% \vspace{-1.5cm}
-%  %\includestandalone{latexEx2}
-%    \includegraphics[scale=1]{Fig1.eps} 
-%\vspace{-1.8cm}
-%  \caption{ }
-%  {\label{fig:cityscalingL}}
-%\end{figure}
 \bibliography{bib}
 \end{document}
