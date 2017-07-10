@@ -4,7 +4,13 @@
 \subsection{Resilience analysis using Graph Theory}
 \label{resilience}
 
- 
+The seminal works in \cite{2000Natur.406..378A,DaqingAl14} address contingency analysis for the power grid using simulation of complex networks. Typically, the power grid is modeled using generator, transmission, and distribution nodes. In such scale-free networks, a large fraction of the nodes have low degrees and a substantially smaller fraction exhibit high degrees. Those networks are established to be resilient against random failures upon nodes, and the overall loss to be contingent upon the targeting of the high-degree hubs \cite{AlbertAl00, CohenAl00, CohenAl01, CallawayAl00}. 
+
+Our Spark implementation addresses the random and cascading failure scenarios explored by \cite{2000Natur.406..378A}, which models the North American power grid using its transmission lines, and examines its connectivity in relation to a small set of high impact nodes. The notion of connectivity is based on the notion of betweenness centrality. A node's betweenness centrality is a focal measure of connectedness in a graph, built around the notion of shortest paths. Given any two vertices in a graph, there exists at least one shortest path between the vertices. When the length of the path is infinity, it is understood to say that there is no path to connect the given two vertices. If the graph is weighted, the shortest path is obtained by minimising the number of edges that the path passes through. Else, the path is obtained by minimising the sum of the weights of the edges that the path passes through. Given an arbitrary vertex in a graph, its betweenness centrality is defined to be the number of shortest paths that pass through the given vertex. Exploiting betweenness centrality has been widespread in a number of works addressing power grid vulnerability analysis \cite{2000Natur.406..378A,JinAl10}. The work in \cite{2000Natur.406..378A} employs this notion using four scenarios each of which simulates a unique temporal mode of removal of vertices. For example, the overall connectivity of the graph is re-examined upon removal of transmission nodes according to the following orders: (1) totally random order (2) decreasing order of node degrees (load) (3) decreasing order of node betweennees centrality and (4) decreasing order of node betweenness centrality in cascading order resulting from the nodes' dynamical removal. 
+
+Our spatial understanding of the propagation of faults in the Lebanese power grid makes classical use of the concept of spatial correlation \cite{CavagnaAl10, MakseAl95}. As a leading example that we follow, this measure is used in \cite{DaqingAl14} to measure the relation between failures separated at some distance $r$. More details follow in Sec. \ref{methods}.
+
+
 \subsection{Distributed Computation frameworks}
 \label{distcomp}
 
