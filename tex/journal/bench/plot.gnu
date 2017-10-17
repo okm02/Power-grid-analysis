@@ -172,3 +172,25 @@ set xlabel "Nb of Vertices Attacked"
 set ylabel "Percentage Loss"
 plot "../../../bench/lossr" every ::0::1000 using 1 title "Random"  with lines, "../../../bench/lossc" every ::0::1000 using 1 title "Cascading"  with lines, "../../../bench/lossd" every ::0::1000 using 1 title "Degree"  with lines, "../../../bench/lossb" every ::0::1000 using 1 title "Betweenness"  with lines
 
+
+
+set output "frequency20.ps"
+set xlabel "Nb of Vertices"
+set xtics font ", 14"
+set ytics font ", 14"
+set ylabel "Nb of Components"
+#set xtics 2
+set boxwidth 0.1
+set style fill solid
+plot '../../../bench/Frequency.txt' every ::0::20 using 1:2:xtic(1) title "" with boxes
+
+
+set output "frequencyall.ps"
+set xlabel "Nb of Vertices"
+set xtics font ", 14"
+set ytics font ", 14"
+set ylabel "Nb of Components"
+#set xtics 10
+set boxwidth 0.1
+set style fill solid
+plot '../../../bench/Frequency.txt' every ::0::140 using 1:2:xtic(10) title "" with boxes

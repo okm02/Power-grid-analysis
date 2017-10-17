@@ -1,4 +1,4 @@
-Number of Vertices	Frequency of Components having X vertices
+#Number of Vertices	Frequency of Components having X vertices
 2			93285
 3			30180
 4			18214

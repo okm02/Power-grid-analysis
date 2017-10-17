@@ -1,0 +1,3 @@
+#	lossb	lossc	lossr	lossd	  total number of nodes 878969
+60%	102083	38546	526428	67953
+80%	245094	128566	701207	259673
