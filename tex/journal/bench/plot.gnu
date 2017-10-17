@@ -194,3 +194,13 @@ set ylabel "Nb of Components"
 set boxwidth 0.1
 set style fill solid
 plot '../../../bench/Frequency.txt' every ::0::140 using 1:2:xtic(10) title "" with boxes
+
+set output "frequency-selected.ps"
+set xlabel "Nb of Vertices"
+set xtics font ", 14"
+set ytics font ", 14"
+set ylabel "Nb of Components"
+#set xtics 10
+set boxwidth 0.1
+set style fill solid
+plot '../../../bench/Frequency.txt' every ::40::140 using 1:2:xtic(10) title "" with boxes
