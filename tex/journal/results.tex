@@ -1,47 +1,63 @@
 \section{Results}
 \label{results}
-Our own Spark implementation of contingency analysis executes in real-time for the entire power grid, achieving a speed-up of ? on ? processors. We conclude with a spatial understanding of the hotspots on Lebanese soil where energy centers can be exposed and are at risk, using a spatial correlation supported by a binary search tree. The amenability of our work to big data processing makes it extendable to larger networks of networks, towards a fuller understanding of resilence at many vital levels beyond the power grid. Examples are as communications network, Internet networks, transportation networks, hospitals and medical centers networks, to name a few.
 
-~
+Our Spark program was developed in Scala, run on a machine with two physical CPUs. Each CPU has 16 cores, giving us a total 32 cores. It also houses 32GB of RAM and 1TB of disk space, and runs Ubuntu 16.04. We also used the Hadoop distribution 2.7.2 and the Eclipse IDE configured for spark development. What kind of processor model?
+
+Our graph consisted of 199004 connected components, with the maximum component size at 145 and the minimum at 2. In fact, the distribution of component sizes follow a power law as shown in the following diagram?
+
+For each scenario we vary the number of threads and partitions, compute the percentage of loss, and plot this value against the percentage of nodes removed from the graph. From Fig. \ref{}? we see that...
+
+The run-times and efficiency for each pair of ({\it thread},{\it partition}) values using our input graph are shown in Table \ref{tab:graph1}. How does the number of partitions map to the number of tasks? How to verify it? How does the mapping between partitions and tasks correspond to data locality if any? Reserved threads?
+
+To investigate the effect of increasing input on the scalability of our code, we replicate the graph by doubling it (Table \ref{tab:graph2}) then quadrupling it (Table ref{tab:graph4}). It is evident that our tool offers improved scalability as the input size grows?
+
+%Our own Spark implementation of contingency analysis executes in real-time for the entire power grid, achieving a speed-up of ? on ? processors. We conclude with a spatial understanding of the hotspots on Lebanese soil where energy centers can be exposed and are at risk, using a spatial correlation supported by a binary search tree. The amenability of our work to big data processing makes it extendable to larger networks of networks, towards a fuller understanding of resilence at many vital levels beyond the power grid. Examples are as communications network, Internet networks, transportation networks, hospitals and medical centers networks, to name a few.
 
 
-TODO - discuss the benchmarks: 
-\begin{itemize}
-\item Property of the graph (number of components, node per component)
+\begin{table*}[t]
+\begin{minipage}[b]{\textwidth}
+\label{tab:threshold-percentage}
+\caption{Percentage of vertices to be removed to reach 60\% and 80\% losses}
+{\small
+\begin{tabular}{||c||c|c|c|c||}
+\hline
+\textbf{Loss}	&\cellcolor{black!10}BC&	\cellcolor{black!10}C & \cellcolor{black!10} R & \cellcolor{black!10} D \\ \hline \hline
+60\% &		11.6\%&	4.3\%	&59.8\%&	7.7\%	 \\ \hline		
+80\%	&		27.8\%&	14.6\%	&79.7\%&	29.5\%	 \\ \hline		
+\end{tabular}
+}
+\end{minipage}
+\end{table*}
 
-\item For each scenario we vary the number of threads and partitions. 
 
-\item For each scenario we compute the loss. 
 
-\item Scalability - Replicate the graph:
-\end{itemize}
 
 \begin{figure}
 \centering
 \includegraphics[scale=0.35]{bench/loss-100-crop.pdf}
 \label{fig:loss-100}
-\caption{Loss first 100. todo}
+\caption{Loss percentage: first 100 attacks}
 \end{figure}
 
 \begin{figure}
 \centering
 \includegraphics[scale=0.35]{bench/loss-1000-crop.pdf}
 \label{fig:loss-1000}
-\caption{Loss first 1000.. todo}
+\caption{Loss percentage: first 1000 attacks}
 \end{figure}
 
 \begin{figure}
 \centering
 \includegraphics[scale=0.35]{bench/loss-all-crop.pdf}
-\label{fig:loss-100}
-\caption{Loss all... to do}
+\label{fig:loss-all}
+\caption{Loss percentage: overall attacks}
 \end{figure}
 
 
 \begin{table*}[t]
 \begin{minipage}[b]{\textwidth}
 \label{tab:graph1}
-\caption{graph1.. todo}
+\caption{Run-times and Efficiency: $\left \vert V \right \vert = 878,969$}
 {\small
 \centering
 \begin{tabular}{||c||c|c|c|c||c|c|c|c||c|c|c|c||c|c|c|c|}
@@ -63,7 +79,7 @@ TODO - discuss the benchmarks:
 \begin{table*}[t]
 \begin{minipage}[b]{\textwidth}
 \label{tab:graph2}
-\caption{graph 2.. todo}
+\caption{Run-times and Efficiency: $\left \vert V \right \vert = 1,757,938$}
 {\small
 \begin{tabular}{||c||c|c|c|c||c|c|c|c||c|c|c|c||c|c|c|c|}
 \hline
@@ -84,7 +100,7 @@ TODO - discuss the benchmarks:
 \begin{table*}[t]
 \begin{minipage}[b]{\textwidth}
 \label{tab:graph4}
-\caption{graph 4.. todo}
+\caption{Run-times and Efficiency: $\left \vert V \right \vert = 3,515,876$}
 {\small
 \begin{tabular}{||c||c|c|c|c||c|c|c|c||c|c|c|c||c|c|c|c|}
 \hline
