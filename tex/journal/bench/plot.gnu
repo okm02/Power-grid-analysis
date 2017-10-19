@@ -204,3 +204,126 @@ set ylabel "Nb of Components"
 set boxwidth 0.1
 set style fill solid
 plot '../../../bench/Frequency.txt' every ::40::140 using 1:2:xtic(10) title "" with boxes
+
+
+set output "efficiency-bc-1.ps"
+set xrange [0:64]
+set xtics (1, 2, 4, 8, 16, 32, 64)
+set xlabel "Nb of Threads"
+set ylabel "Performance Efficiency"
+plot "efficiency/efficiency-bc-1" using 1:2 title "BC-4"  with lines,\
+"efficiency/efficiency-bc-1" using 1:3 title "BC-8"  with lines,\
+"efficiency/efficiency-bc-1" using 1:4 title "BC-16"  with lines,\
+"efficiency/efficiency-bc-1" using 1:5 title "BC-32"  with lines
+
+set output "efficiency-bc-2.ps"
+set xrange [0:64]
+set xtics (1, 2, 4, 8, 16, 32, 64)
+set xlabel "Nb of Threads"
+set ylabel "Performance Efficiency"
+plot "efficiency/efficiency-bc-2" using 1:2 title "BC-4"  with lines,\
+"efficiency/efficiency-bc-2" using 1:3 title "BC-8"  with lines,\
+"efficiency/efficiency-bc-2" using 1:4 title "BC-16"  with lines,\
+"efficiency/efficiency-bc-2" using 1:5 title "BC-32"  with lines
+
+
+set output "efficiency-bc-4.ps"
+set xrange [0:64]
+set xtics (1, 2, 4, 8, 16, 32, 64)
+set xlabel "Nb of Threads"
+set ylabel "Performance Efficiency"
+plot "efficiency/efficiency-bc-4" using 1:2 title "BC-4"  with lines,\
+"efficiency/efficiency-bc-4" using 1:3 title "BC-8"  with lines,\
+"efficiency/efficiency-bc-4" using 1:4 title "BC-16"  with lines,\
+"efficiency/efficiency-bc-4" using 1:5 title "BC-32"  with lines
+
+
+set output "efficiency-c-1.ps"
+set xrange [0:64]
+set xtics (1, 2, 4, 8, 16, 32, 64)
+set xlabel "Nb of Threads"
+set ylabel "Performance Efficiency"
+plot "efficiency/efficiency-c-1" using 1:2 title "C-4"  with lines,\
+"efficiency/efficiency-c-1" using 1:3 title "C-8"  with lines,\
+"efficiency/efficiency-c-1" using 1:4 title "C-16"  with lines,\
+"efficiency/efficiency-c-1" using 1:5 title "C-32"  with lines
+
+set output "efficiency-c-2.ps"
+set xrange [0:64]
+set xtics (1, 2, 4, 8, 16, 32, 64)
+set xlabel "Nb of Threads"
+set ylabel "Performance Efficiency"
+plot "efficiency/efficiency-c-2" using 1:2 title "C-4"  with lines,\
+"efficiency/efficiency-c-2" using 1:3 title "C-8"  with lines,\
+"efficiency/efficiency-c-2" using 1:4 title "C-16"  with lines,\
+"efficiency/efficiency-c-2" using 1:5 title "C-32"  with lines
+
+set output "efficiency-c-4.ps"
+set xrange [0:64]
+set xtics (1, 2, 4, 8, 16, 32, 64)
+set xlabel "Nb of Threads"
+set ylabel "Performance Efficiency"
+plot "efficiency/efficiency-c-4" using 1:2 title "C-4"  with lines,\
+"efficiency/efficiency-c-4" using 1:3 title "C-8"  with lines,\
+"efficiency/efficiency-c-4" using 1:4 title "C-16"  with lines,\
+"efficiency/efficiency-c-4" using 1:5 title "C-32"  with lines
+
+set output "efficiency-r-1.ps"
+set xrange [0:64]
+set xtics (1, 2, 4, 8, 16, 32, 64)
+set xlabel "Nb of Threads"
+set ylabel "Performance Efficiency"
+plot "efficiency/efficiency-r-1" using 1:2 title "R-4"  with lines,\
+"efficiency/efficiency-r-1" using 1:3 title "R-8"  with lines,\
+"efficiency/efficiency-r-1" using 1:4 title "R-16"  with lines,\
+"efficiency/efficiency-r-1" using 1:5 title "R-32"  with lines
+
+set output "efficiency-r-2.ps"
+set xrange [0:64]
+set xtics (1, 2, 4, 8, 16, 32, 64)
+set xlabel "Nb of Threads"
+set ylabel "Performance Efficiency"
+plot "efficiency/efficiency-r-2" using 1:2 title "R-4"  with lines,\
+"efficiency/efficiency-r-2" using 1:3 title "R-8"  with lines,\
+"efficiency/efficiency-r-2" using 1:4 title "R-16"  with lines,\
+"efficiency/efficiency-r-2" using 1:5 title "R-32"  with lines
+
+set output "efficiency-r-4.ps"
+set xrange [0:64]
+set xtics (1, 2, 4, 8, 16, 32, 64)
+set xlabel "Nb of Threads"
+set ylabel "Performance Efficiency"
+plot "efficiency/efficiency-r-4" using 1:2 title "R-4"  with lines,\
+"efficiency/efficiency-r-4" using 1:3 title "R-8"  with lines,\
+"efficiency/efficiency-r-4" using 1:4 title "R-16"  with lines,\
+"efficiency/efficiency-r-4" using 1:5 title "R-32"  with lines
+
+set output "efficiency-d-1.ps"
+set xrange [0:64]
+set xtics (1, 2, 4, 8, 16, 32, 64)
+set xlabel "Nb of Threads"
+set ylabel "Performance Efficiency"
+plot "efficiency/efficiency-d-1" using 1:2 title "D-4"  with lines,\
+"efficiency/efficiency-d-1" using 1:3 title "D-8"  with lines,\
+"efficiency/efficiency-d-1" using 1:4 title "D-16"  with lines,\
+"efficiency/efficiency-d-1" using 1:5 title "D-32"  with lines
+
+set output "efficiency-d-2.ps"
+set xrange [0:64]
+set xtics (1, 2, 4, 8, 16, 32, 64)
+set xlabel "Nb of Threads"
+set ylabel "Performance Efficiency"
+plot "efficiency/efficiency-d-2" using 1:2 title "D-4"  with lines,\
+"efficiency/efficiency-d-2" using 1:3 title "D-8"  with lines,\
+"efficiency/efficiency-d-2" using 1:4 title "D-16"  with lines,\
+"efficiency/efficiency-d-2" using 1:5 title "D-32"  with lines
+
+set output "efficiency-d-4.ps"
+set xrange [0:64]
+set xtics (1, 2, 4, 8, 16, 32, 64)
+set xlabel "Nb of Threads"
+set ylabel "Performance Efficiency"
+plot "efficiency/efficiency-d-4" using 1:2 title "D-4"  with lines,\
+"efficiency/efficiency-d-4" using 1:3 title "D-8"  with lines,\
+"efficiency/efficiency-d-4" using 1:4 title "D-16"  with lines,\
+"efficiency/efficiency-d-4" using 1:5 title "D-32"  with lines

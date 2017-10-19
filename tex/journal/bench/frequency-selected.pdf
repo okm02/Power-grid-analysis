@@ -53,12 +53,12 @@ endobj
 <?adobe-xap-filters esc="CRLF"?>
 <x:xmpmeta xmlns:x='adobe:ns:meta/' x:xmptk='XMP toolkit 2.9.1-13, framework 1.6'>
 <rdf:RDF xmlns:rdf='http://www.w3.org/1999/02/22-rdf-syntax-ns#' xmlns:iX='http://ns.adobe.com/iX/1.0/'>
-<rdf:Description rdf:about='uuid:3881e096-eb49-11f2-0000-43d243b556c1' xmlns:pdf='http://ns.adobe.com/pdf/1.3/' pdf:Producer='GPL Ghostscript 9.21'/>
-<rdf:Description rdf:about='uuid:3881e096-eb49-11f2-0000-43d243b556c1' xmlns:xmp='http://ns.adobe.com/xap/1.0/'><xmp:ModifyDate>2017-10-17T14:16:50+03:00</xmp:ModifyDate>
-<xmp:CreateDate>Tue -Oc-t T17: 1:4:16::9 </xmp:CreateDate>
+<rdf:Description rdf:about='uuid:b2ee6b3d-ecf3-11f2-0000-43d243b556c1' xmlns:pdf='http://ns.adobe.com/pdf/1.3/' pdf:Producer='GPL Ghostscript 9.21'/>
+<rdf:Description rdf:about='uuid:b2ee6b3d-ecf3-11f2-0000-43d243b556c1' xmlns:xmp='http://ns.adobe.com/xap/1.0/'><xmp:ModifyDate>2017-10-19T17:09:41+03:00</xmp:ModifyDate>
+<xmp:CreateDate>Thu -Oc-t T19: 1:7:09::9 </xmp:CreateDate>
 <xmp:CreatorTool>gnuplot 5.0 patchlevel 6</xmp:CreatorTool></rdf:Description>
-<rdf:Description rdf:about='uuid:3881e096-eb49-11f2-0000-43d243b556c1' xmlns:xapMM='http://ns.adobe.com/xap/1.0/mm/' xapMM:DocumentID='uuid:3881e096-eb49-11f2-0000-43d243b556c1'/>
-<rdf:Description rdf:about='uuid:3881e096-eb49-11f2-0000-43d243b556c1' xmlns:dc='http://purl.org/dc/elements/1.1/' dc:format='application/pdf'><dc:title><rdf:Alt><rdf:li xml:lang='x-default'>frequency-selected.ps</rdf:li></rdf:Alt></dc:title><dc:creator><rdf:Seq><rdf:li>mj54</rdf:li></rdf:Seq></dc:creator><dc:description><rdf:Alt><rdf:li xml:lang='x-default'>gnuplot plot</rdf:li></rdf:Alt></dc:description></rdf:Description>
+<rdf:Description rdf:about='uuid:b2ee6b3d-ecf3-11f2-0000-43d243b556c1' xmlns:xapMM='http://ns.adobe.com/xap/1.0/mm/' xapMM:DocumentID='uuid:b2ee6b3d-ecf3-11f2-0000-43d243b556c1'/>
+<rdf:Description rdf:about='uuid:b2ee6b3d-ecf3-11f2-0000-43d243b556c1' xmlns:dc='http://purl.org/dc/elements/1.1/' dc:format='application/pdf'><dc:title><rdf:Alt><rdf:li xml:lang='x-default'>frequency-selected.ps</rdf:li></rdf:Alt></dc:title><dc:creator><rdf:Seq><rdf:li>mj54</rdf:li></rdf:Seq></dc:creator><dc:description><rdf:Alt><rdf:li xml:lang='x-default'>gnuplot plot</rdf:li></rdf:Alt></dc:description></rdf:Description>
 </rdf:RDF>
 </x:xmpmeta>
                                                                         
@@ -68,8 +68,8 @@ endstream
 endobj
 2 0 obj
 <</Producer(GPL Ghostscript 9.21)
-/CreationDate(Tue Oct 17 14:16:49 2017)
-/ModDate(D:20171017141650+03'00')
+/CreationDate(Thu Oct 19 17:09:39 2017)
+/ModDate(D:20171019170941+03'00')
 /Title(frequency-selected.ps)
 /Creator(gnuplot 5.0 patchlevel 6)
 /Subject(gnuplot plot)
@@ -90,7 +90,7 @@ xref
 0000002215 00000 n 
 trailer
 << /Size 12 /Root 1 0 R /Info 2 0 R
-/ID [<9F60E92CD69159DAAA30F1D4563B3D7F><9F60E92CD69159DAAA30F1D4563B3D7F>]
+/ID [<582CE7D36812FA03AF42A745A535DDDF><582CE7D36812FA03AF42A745A535DDDF>]
 >>
 startxref
 4048
