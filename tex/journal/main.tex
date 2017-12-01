@@ -1,34 +1,56 @@
-\documentclass[twocolumn,showpacs,preprintnumbers,amsmath,amssymb,floatfix]{revtex4-1}
+\documentclass[journal]{IEEEtran}
+
 \input{packages}
-\newtheorem{theorem}{Theorem}
-\newtheorem{proposition}{Proposition}
+
+\hyphenation{op-tical net-works semi-conduc-tor}
+
 
 \begin{document}
-\author{Fatima Abu Salem$^{2}$, Mohamad  Jaber$^{2}$, Chadi Abdallah$^{1}$, Omar Mehio$^{2}$, and Sara Najem$^{1}$}
-%
-\affiliation{$^1$ National Center for Remote Sensing, National Council for Scientific Research (CNRS), Riad al Soloh, 1107 2260, Beirut, Lebanon}
-\affiliation{$^2$ Computer Science Department, American University of Beirut, Beirut, Lebanon}
 
-\date{\today}
 
+\title{Spatiotemporal contingency analysis for the Lebanese power grid using Apache Spark}
+
+
+\author{Fatima K. Abu Salem$^{2}$, \and
+Mohamad  Jaber$^{2}$, \and 
+Chadi Abdallah$^{1}$, \and 
+Omar Mehio$^{2}$, \and and Sara Najem$^{1}$
+\thanks{$^1$ National Center for Remote Sensing, National Council for Scientific Research (CNRS), Riad al Soloh, 1107 2260, Beirut, Lebanon.}
+\thanks{$^2$ Computer Science Department, American University of Beirut, Beirut, Lebanon.}
+\thanks{Equally contributing author. Corresponding author: Sara Najem.}
+}
+
+% \texttt{\{fa07, mj54, okm02\}@aub.edu.lb}
+
+
+% The paper headers
+\markboth{IEEE Trans. of Computational Social Systems - SI: \emph{Parallel and Distributed Processing for Computational Social Systems}}%
+{}
+
+
+% make the title area
+\maketitle
 \input{abstract}
 
+\begin{IEEEkeywords}
+Spatiotemporal, Spark, Power Grid, Parallel Computing, Graph
+\end{IEEEkeywords}
 
-\pacs{89.75.-k, 89.65.Lm, 89.75.Kd, 88.40.fc}
-\title{Spatiotemporal analysis of the resilience of the Lebanese power grid using Apache Spark}
+
+\IEEEpeerreviewmaketitle
 
 \maketitle
 
 \input{intro}
-
 \input{background}
-
 \input{methods}
-
 \input{results}
-
 \input{conclusion}
 
+\bibliography{biblio}
+\bibliographystyle{IEEEtran}
 
-\bibliography{bib}
+
 \end{document}
+
+
