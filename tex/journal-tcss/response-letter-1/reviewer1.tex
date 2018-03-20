@@ -1,0 +1,77 @@
+\section{Answers to the comments of Reviewer 1}
+
+\paragraph{}
+\begin{itemize}
+\item This paper proposed a vulnerability analysis of power grid based on graph topology and parallelized the analysis using Apache spark system. The problem is important since power grid is important to a country. The paper mentioned there are only a few works on such vulnerability analysis on power grid. This paper gives interesting exploration in this area. 
+
+The drawback is that the approach is specific to the Lebanese power grid network. A more general approach will be more beneficial to the audience.
+
+~
+
+\answer{to do}
+
+~
+
+\item The paper removes the five graph nodes which are the five major power plants. This removal seems  ad-hoc and is not formally included in their algorithm. It is better to give more graph property based quantatitive measure to remove nodes. This removal is very specific to the Lebanese network and it is not clear how to transfer it to other networks.
+
+~
+
+\answer{to do}
+
+~
+
+
+\item The ``parallel efficiency'' is not defined.
+
+~
+
+\answer{to do}
+
+~
+
+
+\item It is better to give the runtimes for serial phase and parallel phase, since serial phase limits the maximum speedups when using more threads. 
+
+~
+
+\answer{to do}
+
+~
+
+
+\item The parallelization proposed by the paper is a simple and direct parallelization approach. The parallelization effectiveness strongly depends on the number of connected components and the balance of the size of each component. In this paper, the authors observe each component is very small and the number of components are huge, which may hide the load balance problem. When the graph evolves or change to another network, it is not clear if this property still remains or not.
+
+~
+
+\answer{to do}
+
+~
+
+
+\item I did not see how the partitioning of RDD is done in this paper(only different number of partitions is tried in the paper) and partitioning strategy may have strong impact on the parallelization.
+
+~
+
+\answer{to do}
+
+~
+
+\item The input graph in the paper is small and a single machine is enough for processing it. The spark system designed mainly for distributed environments brings extra cost when running on shared memory machines. 
+
+~
+
+\answer{to do}
+
+~
+
+\item In Table II-IV, no unit is specified for the runtime. 
+
+~
+
+\answer{to do}
+
+~
+
+\end{itemize}
+
+
