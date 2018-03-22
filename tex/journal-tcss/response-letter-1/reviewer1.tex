@@ -40,19 +40,15 @@ The drawback is that the approach is specific to the Lebanese power grid network
 
 
 \item The parallelization proposed by the paper is a simple and direct parallelization approach. The parallelization effectiveness strongly depends on the number of connected components and the balance of the size of each component. In this paper, the authors observe each component is very small and the number of components are huge, which may hide the load balance problem. When the graph evolves or change to another network, it is not clear if this property still remains or not.
+I did not see how the partitioning of RDD is done in this paper(only different number of partitions is tried in the paper) and partitioning strategy may have strong impact on the parallelization.
 
 ~
 
-\answer{to do}
-
-~
-
-
-\item I did not see how the partitioning of RDD is done in this paper(only different number of partitions is tried in the paper) and partitioning strategy may have strong impact on the parallelization.
-
-~
-
-\answer{to do}
+\answer{
+ln Spark, the number of partitions can either be (1) specified by the Spark execution engine so that to pick the best number of partitions with respect to the number available cores and data size; or (2) can be adjusted (using \texttt{repartition} method) by the programmer according the needs of the application. Nonetheless, in both cases, the partitions are created in a balanced way with respect to size. Moreover, GraphX uses a balanced graph partitioning to allow for the efficient computation by a BSP-like distributed computing framework. Additionnaly, Spark allows for the use of custom partitioning (using \texttt{HashPartitioner} and \texttt{RangePartitioner}), which can be defined by the programmer. In our case, we manually varied the number of partitions to study the scalability of our method, and for each partitioning scheme we made sure that the distribution of the partitions is done so that large strongly connected components are spread among different partitions. 
+We added a paragraph in the paper to elaborate more about partitioning.
+}
+ 
 
 ~
 
@@ -68,7 +64,7 @@ The drawback is that the approach is specific to the Lebanese power grid network
 
 ~
 
-\answer{to do}
+\answer{We specified the unit, which is seconds, in Tables II-IV.}
 
 ~
 

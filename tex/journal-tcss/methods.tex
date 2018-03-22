@@ -45,16 +45,35 @@ Our resulting network model consists of an undirected, unweighted graph with $67
 
 \subsection{Random and Cascading Contingency Analysis}
 
-Our baseline approach for navigating through node attacks follows that of \cite{2000Natur.406..378A}. A high level representation of the algorithm for implementing the random and cascading attacks is given below. It captures both notions of node attack, followed by an evaluation of the loss in power flow capacity across the entire network.
-\begin{lstlisting}[language=java]
-attackGraph(Graph graph) {
-   for(i = 0 until |V|) {
-      select victim vertex v
-      remove vertex v
-      update loss with respect to v
-   }
+Our baseline approach for navigating through node attacks follows that of \cite{2000Natur.406..378A}. A high level representation of the algorithm for implementing the random and cascading attacks is depicted in Algorithm~\ref{algo:random-cascading}. It captures both notions of node attack, followed by an evaluation of the loss in power flow capacity across the entire network.
+%\begin{lstlisting}[language=java]
+%attackGraph(Graph graph) {
+%   for(i = 0 until |V|) {
+%      select victim vertex v
+%      remove vertex v
+%      update loss with respect to v
+%   }
+%}
+%\end{lstlisting}
+%
+\begin{algorithm}[ht]
+\KwIn{Graph graph = (V, E)}
+\KwOut{random and cascading attacks of the input graph}
+    \SetKwFunction{FMain}{attackGraph}
+    \SetKwProg{Fn}{Function}{:}{}
+    \Fn{\FMain{graph}}{
+        \For{$i \gets 0$ \KwTo $|V|$}
+        {
+        select victim vertex v\;
+        remove vertex v\;
+        update loss with respect to v\;
+        }
 }
-\end{lstlisting}
+\textbf{End Function}
+ \caption{\edited{Random and cascading attacks}}
+ \label{algo:random-cascading}
+\end{algorithm}
+
 Here, a victim vertex is chosen upon an examination of some measure of its centrality. Centrality is a quantitative measure that aims at revealing the importance of a node. Several indices of centrality tackled in the literature are based on geometric, spectral, as well as path-based measures. We refer the reader to \cite{BoldiVigna14} for a comprehensive survey. For undirected graphs, the geometric measure related to the indegree of a given node, as well as the path-based measure based on its betweenness, have both yielded a contextual understanding of connectivity loss in power grids (\cite{2000Natur.406..378A, JinAl10}). In line with this body of work, we select the victim vertex according to one of the following four scenarios:
 \begin{itemize}
 \item \emph{Random attacks}: a vertex is selected at random.
@@ -62,21 +81,47 @@ Here, a victim vertex is chosen upon an examination of some measure of its centr
 \item \emph{Attacks based on path-based centrality measure}: the vertex with the highest betweenness centrality is selected. The betweenness centrality of the nodes is only computed once (i.e., is not be updated after removing a vertex). 
 \item \emph{Cascading attacks}: This is similar to the betweenness centrality scenario; however, the betweenness centrality of the nodes is updated at each iteration (i.e., after removal of a victim vertex).
 \end{itemize}
-Below, a more detailed snippet captures these four scenarios:
-\begin{lstlisting}[language=java]
-Compute betweenness centrality for each v in V
+Algorithm~\ref{algo:scenario-selection} depicts a more detailed snippet captures these four scenarios.
+%\begin{lstlisting}[language=java]
+%Compute betweenness centrality for each v in V
+%
+%attackGraph(Graph G = (V,E), bool Cascading) {
+%   for(i = 0 until |V|) {
+%      select victim vertex v in V
+%      remove vertex v
+%      if Cascading == TRUE
+%         for each node not removed so far
+%            recompute betweenness centrality
+%      update loss with respect to v
+%   }
+%}
+%\end{lstlisting}
 
-attackGraph(Graph G = (V,E), bool Cascading) {
-   for(i = 0 until |V|) {
-      select victim vertex v in V
-      remove vertex v
-      if Cascading == TRUE
-         for each node not removed so far
-            recompute betweenness centrality
-      update loss with respect to v
-   }
+\begin{algorithm}[ht]
+\KwIn{Graph graph = (V, E), boolean cascading}
+Compute betweenness centrality for each v in V\;
+    \SetKwFunction{FMain}{attackGraph}
+    \SetKwProg{Fn}{Function}{:}{}
+    \Fn{\FMain{graph,  cascading}}{
+        \For{$i \gets 0$ \KwTo $|V|$}
+        {
+         select victim vertex $v$ in $V$\;
+               remove vertex $v$\;
+        \If{$ cascading $}
+            {
+             \For{each node $u$ not removed so far}
+             {
+                 recompute betweenness centrality for $u$\;
+             }
+            }
+      update loss with respect to $v$\;
+        }
 }
-\end{lstlisting}
+\textbf{End Function}
+ \caption{\edited{Scenario-based victim selection}}
+ \label{algo:scenario-selection}
+\end{algorithm}
+
 The choice behind node betweenness centrality is motivated by the following. Let $\sigma(s,t)$ denote the number of shortest paths between two vertices $s$ and $t$, and let $\sigma(s,t \left \vert \right. v)$ denote the number of shortest paths between $s$ and $t$ that pass through $v$. A most recent betweenness centrality (BC) score of $v$ is suggested by Brandes in \cite{Brandes01} as follows:
 \begin{equation}
 C(v) = \sum_{s,t \in V} \frac{\sigma(s,t \left \vert \right. v)}{\sigma(s,t)}
@@ -193,6 +238,9 @@ We now present our Spark-based algorithm, guided by the propositions above. The 
 \item Given a file (read from local or distributed file system, i.e., HDFS) containing information about the graph, build the corresponding graph RDD. Here, the input file is partitioned for distribution over the multiple threads. GraphX in Spark represents the graph internally as a pair of vertex and edge collections built on RDDs. 
 \item Compute the connected components on the graph RDD using GraphX's built in strongly connected component distributed kernel. This creates an RDD, \texttt{rddCC}, of items, where each item corresponds to a connected component. 
 \item Partition \texttt{rddCC} into several $p$ partitions, for $p = 4, \ldots, 32$, $p \leftarrow 2\times p$. Each partition is allocated to a single thread, and contains a number of connected components.  
+\edited{
+Note that, we use a customized partitioning scheme to get balanced partitions, i.e., large strongly connected components are spread among different partitions.}
+
 \item The connected components within each partition are now distributed over the multiple threads on a single core (or multiple cores on a single thread). For each connected component, a thread $t$ selects a victim node according to one of the four scenarios, and locally updates the corresponding component by removing the victim vertex and its incident edges. Only the fourth scenario stipulates an update on the BC score of each remaining node. A tuple $(\rho,\lambda)$ is appended to the end of a list ${\bf L}_t$. Here, $\rho$ denotes its rank in the removal process if the vertex has been chosen in random order. Otherwise, $\rho$ denotes its centrality (degree or load based). Also, $\lambda$ denotes the loss percentage associated with the given victim node. 
 \item Repeat Step 4 until all the nodes of a thread's connected component are identified. 
 \item All threads now communicate their pairs in the list ${\bf L}_t$ to each other.
@@ -231,3 +279,7 @@ Here we study the spatial correlation between the targeted nodes in the cascadin
 C(x) \propto \frac{\sum_{{ij}\in F} (x_i- \bar{x} )(x_j - \bar{x}) \delta(r_{ij} - r)}{\sum_{ij \in F} \delta (r_{ij} - r)},
 \end{equation}
 Here, $x_i=1$ if node is is failed, and $0$ otherwise. Also, $\bar{x}$ denotes the average number of cascading failures over the whole network, $\delta$ denotes the function that singles out the $j$ nodes that are $r$ distance apart from $i$, and $r_{ij}$ denotes the Euclidean distance between nodes $i$ and $j$. Positive values for $C(r)$ indicate a tendency of failures to be close to each other, while negative values indicate anti-correlations.  
+
+
+
+%%% end
