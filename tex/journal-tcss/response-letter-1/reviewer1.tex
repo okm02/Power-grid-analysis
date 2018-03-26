@@ -8,7 +8,7 @@ The drawback is that the approach is specific to the Lebanese power grid network
 
 ~
 
-\answer{to do}
+\answer{The authors concede that a more general approach is certainly more beneficial; however, we still believe there is merit in tackling the specifics related to the Lebanese power grid, especially after Lebanon has withstood decades of wars and suffered from a lack of infrastructure rebuilding. With that said, our approach can generalize to networks of low connectivity such as that found in the Lebanese grid. We have clarified this in the Introduction.}
 
 ~
 
@@ -16,7 +16,7 @@ The drawback is that the approach is specific to the Lebanese power grid network
 
 ~
 
-\answer{to do}
+\answer{Unfortunately, we received the data from the Lebanese ministry of power and energy in such a way that those five major power plants have already been removed. We just made this comment in Sec. III A, second paragraph. It is not clear to the authors whether we would still have to provide for how to remove those nodes, and we would appreciate it if the reviewer can let us know in case this is still required.}
 
 ~
 
@@ -25,7 +25,7 @@ The drawback is that the approach is specific to the Lebanese power grid network
 
 ~
 
-\answer{to do}
+\answer{We now inserted a definition when this term is first used.}
 
 ~
 
@@ -34,7 +34,7 @@ The drawback is that the approach is specific to the Lebanese power grid network
 
 ~
 
-\answer{to do}
+\answer{Actually, the timings shown in the tables correspond to the parallel phase of the algorithm. The sequential part was omitted because it was extremely negligible compared to the parallel part that is of higher order (in contrast to linear running time in steps 7 and 8). We should have made this explicit and have by now inserted this comment in the text. Thank you for point it out.}
 
 ~
 
@@ -56,7 +56,7 @@ We added a paragraph in the paper to elaborate more about partitioning.
 
 ~
 
-\answer{to do}
+\answer{We agree that the input graph is small, but what we are offering is a proof of concept that the algorithm scales and its performance improves should the graph get larger (for example, in studying the power grid of a bigger country, or networks of networks connected to the power grid such as telephony and banking system, to name a few examples. Also, whilst running a distributed algorithm such as one written in Spark may induce significantly extra cost when run on shared memory, we believe this tends to be the case when the algorithm introduces contention and cache issues such as false sharing on the shared data structures. This does not apply to our algorithm.}
 
 ~
 

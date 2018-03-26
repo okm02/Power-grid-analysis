@@ -14,7 +14,7 @@ The following points specifically need to be addressed:
 
 ~
 
-\answer{to do}
+\answer{Thank you for point this out. We have now clarified this in the proof of Prop. 5 as follows: A parallel algorithm is work optimal if it does not run more instructions than the sequential version.}
 
 ~
 
@@ -22,7 +22,8 @@ The following points specifically need to be addressed:
 
 ~
 
-\answer{to do}
+\answer{We have ellaborate more on data movement, which implies network communications in case of distributed setting, and garbage collector and memory allocation in case of local setting
+}
 
 ~
 \end{itemize}
@@ -42,7 +43,9 @@ Also, the Background Sections lacks literature review on power network analysis 
 
 ~
 
-\answer{to do}
+\answer{Indeed -- the only algorithm that requires the use of Spark is connected components. By large, this isn't a task parallel algorithm. Spark is used to distribute the data and so in a way it implements a data parallel rather than task parallel algorithm. Our objective has been to use serial graph algorithms on distributed data in SPMD mode (single program, multiple data). Please note that we have now inserted these remarks in the introduction.\newline
+Also, we have noted that no work uses spark or MapReduce for power grid analysis beyond the ones mentioned in the article (for example, Jin et al’s, 2010).
+}
 
 ~
 
