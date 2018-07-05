@@ -1,3 +1,7 @@
 .DS_Store
 .cache*
 target
+bench/lossb
+bench/lossc
+bench/lossd
+bench/lossr
