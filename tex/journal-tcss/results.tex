@@ -7,9 +7,9 @@ Our Spark program is written in Scala using Hadoop distribution $2.7.2$, and run
 
 As discussed earlier, our input graph $G$ is an undirected, unweighted graph with $679965$ edges and $899162$ vertices. Each vertex and edge is represented using 8 bytes and so the total amount of memory required by our graph is about $20$MB. 
 
-Our input graph also consists of $199004$ connected components, with the maximum component size at $145$ and the minimum at $2$. The distribution of component sizes is shown in Fig. \ref{fig:cs-overall}, where the numbers of components with sizes above, say $40$, were dwarfed by the components with smaller sizes. Fig. \ref{fig:cs-selected} is an alternative figure that reveals the distribution of larger components. 
+Our input graph also consists of $199004$ connected components, with the maximum component size at $145$ and the minimum at $2$. The distribution of component sizes is shown in Fig. \ref{fig:vertices-components-all}, where the numbers of components with sizes above, say $40$, were dwarfed by the components with smaller sizes. Fig. \ref{fig:vertices-components-40} (resp. Fig. \ref{fig:vertices-components-20}) is an alternative figure that reveals the distribution of larger (resp. smaller) components. 
 
-To investigate the scalability of our code for increasing input, we replicate the graph by doubling it (labeled graph $G_2$) then quadrupling it (labeled graph $G_4$), whilst prerserving the same structure as far as connected components are concerned.
+To investigate the scalability of our code for increasing input, we replicate the graph by doubling it (labeled graph $G_2$) then quadrupling it (labeled graph $G_4$), whilst preserving the same structure as far as connected components are concerned.
 
 \subsection{Failures and connectivity loss analysis}
 
@@ -36,34 +36,35 @@ For each of the four scenarios described in Sec. \ref{methods}, we vary the numb
 
 \begin{figure}
 \centering
-\includegraphics[scale=0.35]{bench/loss-100-crop.pdf}
+\includegraphics[scale=0.35]{bench/generated/loss-100-crop.pdf}
 \caption{Loss percentage: first 100 attacks}
 \label{fig:loss-100}
 \end{figure}
 
 \begin{figure}
 \centering
-\includegraphics[scale=0.35]{bench/loss-1000-crop.pdf}
+\includegraphics[scale=0.35]{bench/generated/loss-1000-crop.pdf}
 \caption{Loss percentage: first 1000 attacks}
 \label{fig:loss-1000}
 \end{figure}
 
 \begin{figure}
 \centering
-\includegraphics[scale=0.35]{bench/loss-all-crop.pdf}
+\includegraphics[scale=0.35]{bench/generated/loss-all-crop.pdf}
 \caption{Loss percentage: overall attacks}
 \label{fig:loss-all}
 \end{figure}
 
 \subsection{Run-time and parallel efficiency analysis}
-The run-time and parallel efficiency for each pair of ({\it thread},{\it partition}) values using our input graphs are shown in Table \ref{tab:graph1}, \ref{tab:graph2}, and \ref{tab:graph4}, for $G$, $G_2$, and $G_4$ respectively. 
+The run-time and parallel efficiency for each pair of ({\it thread},{\it partition}) values using our input graphs are shown in Table \ref{tab:graph1}, \ref{tab:graph2}, and \ref{tab:graph4}, for $G$, $G_2$, and $G_4$ respectively. Moreover, the corresponding performance efficiency plots are shown in Fig. \ref{fig:effbc1}, \ref{fig:effbc2}, \ref{fig:effbc4}, \ref{fig:effc1}, \ref{fig:effc2}, \ref{fig:effc4}, \ref{fig:effd1}, \ref{fig:effd2}, \ref{fig:effd4}, \ref{fig:effr1}, \ref{fig:effr2}, and \ref{fig:effr4}.  
+
 %
 \edited{
 Here, parallel efficiency is defined as $\frac{T_s}{p\cdot T_p}$, where $T_s$ denotes the serial run-time and $T_p$ denotes the parallel run-time given $p$ parallel processes.}
 %
 The timings shown in the Tables correspond to the parallel phase of the algorithm. The sequential run-time was omitted because it was extremely negligible compared to the parallel part that is of higher order (in contrast to linear running time in steps 7 and 8).
 %
-By default, Spark sets the partition size at 64 MB. This is too large for our given graph. As a result, we choose to override the default value by specifying the number of partitions at compile time. When this is done, Spark re-adjusts the size of each partition based on their total number as well as on the size of the input graph. The several connected components in each graph get mapped onto all partitions such that the number of vertices in each partition is balanced across all partitions. We experiment with a number of partitions ranging from $4$, $8$, $16$, and $32$ in order to explore the effect that the number of partitions have on run-time and parallel efficiency. From Fig. \ref{fig:cs-overall} and \ref{fig:cs-selected}, we gather that there would be enough connected components in each partition to engage all threads assigned to the partition. Also, the fact that many connected components have sizes greater than, say, 40, ensures that the distributed work is more or less balanced.
+By default, Spark sets the partition size at 64 MB. This is too large for our given graph. As a result, we choose to override the default value by specifying the number of partitions at compile time. When this is done, Spark re-adjusts the size of each partition based on their total number as well as on the size of the input graph. The several connected components in each graph get mapped onto all partitions such that the number of vertices in each partition is balanced across all partitions. We experiment with a number of partitions ranging from $4$, $8$, $16$, and $32$ in order to explore the effect that the number of partitions have on run-time and parallel efficiency. From Fig. \ref{fig:vertices-components-all} and \ref{fig:vertices-components-40}, we gather that there would be enough connected components in each partition to engage all threads assigned to the partition. Also, the fact that many connected components have sizes greater than, say, 40, ensures that the distributed work is more or less balanced.
 
 As expected, for all three graphs, the fastest and yet the worst parallel efficiency correspond to the R (random failures) scenario that does not rely on any centrality measure computation. In contrast, the highest run-times and hence best efficiency are for the C (cascading scenario) that updates the betweenness centrality of all the nodes following each node removal. It is clear that the more work entailed by a certain scenario, the better it will be for the parallel program to compensate for the overheads associated with the partitioning and scheduling operations. Reading across the three tables for the same partition size and same scenario, our tool shows improved scalability as the input size grows. 
 
@@ -77,19 +78,19 @@ With that said, we observe that efficiency actually improves for larger partitio
 
 
 
-\begin{figure}
-\centering
-\includegraphics[scale=0.35]{bench/frequencyall-crop.pdf}
-\caption{Components size -- overall distribution}
-\label{fig:cs-overall}
-\end{figure}
+%\begin{figure}
+%\centering
+%\includegraphics[scale=0.35]{bench/generated/frequencyall-crop.pdf}
+%\caption{Components size -- overall distribution}
+%\label{fig:cs-overall}
+%\end{figure}
 
-\begin{figure}
-\centering
-\includegraphics[scale=0.35]{bench/frequency-selected-crop.pdf}
-\caption{Components size -- cropped distribution}
-\label{fig:cs-selected}
-\end{figure}
+%\begin{figure}
+%\centering
+%\includegraphics[scale=0.35]{bench/generated/frequency-selected-crop.pdf}
+%\caption{Components size -- cropped distribution}
+%\label{fig:cs-selected}
+%\end{figure}
 
 \begin{table*}[t]
 \begin{minipage}[b]{\textwidth}
@@ -235,7 +236,7 @@ With that said, we observe that efficiency actually improves for larger partitio
 
 \begin{figure}
 \centering
-\includegraphics[scale=0.35]{bench/bench-efficiency/efficiency-r-4-crop.pdf}
+\includegraphics[scale=0.35]{bench/generated/efficiency-r-4-crop.pdf}
 \caption{Efficiency for the random (R) scenario and graph $G_4$}
 \label{fig:effr4}
 \end{figure}
@@ -247,7 +248,7 @@ The spatial correlation analysis shown in Fig. \ref{fig:correlation} reveals a l
 
 \begin{figure}
 \centering
-\includegraphics[scale=0.65]{bench/correlation-eps-converted-to.pdf}
+\includegraphics[scale=0.65]{bench/fixed/correlation-eps-converted-to.pdf}
 \caption{Spatial correlation between nodes in the cascading scenario on a logarithmic scale.}
 \label{fig:correlation}
 \end{figure}
