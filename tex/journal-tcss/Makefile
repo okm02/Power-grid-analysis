@@ -1,10 +1,10 @@
-file=main.tex
+file=main
 
 fast: clean
-	pdflatex main.tex
-	bibtex main
-	pdflatex main.tex
-	pdflatex main.tex
+	pdflatex ${file}.tex
+	bibtex ${file}
+	pdflatex ${file}.tex
+	pdflatex ${file}.tex
 
 all:
 	cd ../../bench; sh filter-script
@@ -13,4 +13,4 @@ all:
 
 .PHONY: clean
 clean:
-	@rm -rf main.pdf main.aux main.blg main.log
+	@rm -rf ${file}.pdf ${file}.aux ${file}.blg ${file}.log ${file}.bbl
