@@ -56,16 +56,17 @@ For each of the four scenarios described in Sec. \ref{methods}, we vary the numb
 \end{figure}
 
 \subsection{Run-time and parallel efficiency analysis}
-The run-time and parallel efficiency for each pair of ({\it thread},{\it partition}) values using our input graphs are shown in Table \ref{tab:graph1}, \ref{tab:graph2}, and \ref{tab:graph4}, for $G$, $G_2$, and $G_4$ respectively. Moreover, the corresponding performance efficiency plots are shown in Fig. \ref{fig:effbc1}, \ref{fig:effbc2}, \ref{fig:effbc4}, \ref{fig:effc1}, \ref{fig:effc2}, \ref{fig:effc4}, \ref{fig:effd1}, \ref{fig:effd2}, \ref{fig:effd4}, \ref{fig:effr1}, \ref{fig:effr2}, and \ref{fig:effr4}.  
-
+\secondedited{
+The run-time for each pair of ({\it thread},{\it partition}) values using our input graphs are shown in Table \ref{tab:graph1}, \ref{tab:graph2}, and \ref{tab:graph4}, for $G$, $G_2$, and $G_4$ respectively. Moreover, the corresponding performance efficiency plots are shown in Fig. \ref{fig:effbc1}, \ref{fig:effbc2}, \ref{fig:effbc4}, \ref{fig:effc1}, \ref{fig:effc2}, \ref{fig:effc4}, \ref{fig:effd1}, \ref{fig:effd2}, \ref{fig:effd4}, \ref{fig:effr1}, \ref{fig:effr2}, and \ref{fig:effr4}.  
+}
 %
 \edited{
 Here, parallel efficiency is defined as $\frac{T_s}{p\cdot T_p}$, where $T_s$ denotes the serial run-time and $T_p$ denotes the parallel run-time given $p$ parallel processes.}
 %
 \secondedited{
-The timings shown in the Tables correspond to the parallel phase of the algorithm. The sequential run-time was omitted because it was extremely negligible compared to the parallel part that is of higher order (in contrast to linear running time in steps 7 and 8).}
+The timings shown in the Tables correspond to the parallel phase of the algorithm. The sequential run-time was omitted because it was extremely negligible compared to the parallel part that is of higher order (in contrast to linear running time in steps 7 and 8).
 %
-By default, Spark sets the partition size at 64 MB. This is too large for our given graph. As a result, we choose to override the default value by specifying the number of partitions at compile time. When this is done, Spark re-adjusts the size of each partition based on their total number as well as on the size of the input graph. The several connected components in each graph get mapped onto all partitions such that the number of vertices in each partition is balanced across all partitions. We experiment with a number of partitions ranging from $4$, $8$, $16$, and $32$ in order to explore the effect that the number of partitions have on run-time and parallel efficiency. From Fig. \ref{fig:vertices-components-all} and \ref{fig:vertices-components-40}, we gather that there would be enough connected components in each partition to engage all threads assigned to the partition. Also, the fact that many connected components have sizes greater than, say, 40, ensures that the distributed work is more or less balanced.
+By default, Spark sets the partition size at 64 MB. This is too large for our given graph. As a result, we choose to override the default value by specifying the number of partitions at compile time. When this is done, Spark re-adjusts the size of each partition based on their total number as well as on the size of the input graph. The several connected components in each graph get mapped onto all partitions such that the number of vertices in each partition is balanced across all partitions. We experiment with a number of partitions ranging from $4$, $8$, $16$, and $32$ in order to explore the effect that the number of partitions have on run-time and parallel efficiency. From Fig. \ref{fig:vertices-components-all} and \ref{fig:vertices-components-40}, we gather that there would be enough connected components in each partition to engage all threads assigned to the partition. Also, the fact that many connected components have sizes greater than, say, 40, ensures that the distributed work is more or less balanced.}
 
 As expected, for all three graphs, the fastest and yet the worst parallel efficiency correspond to the R (random failures) scenario that does not rely on any centrality measure computation. In contrast, the highest run-times and hence best efficiency are for the C (cascading scenario) that updates the betweenness centrality of all the nodes following each node removal. It is clear that the more work entailed by a certain scenario, the better it will be for the parallel program to compensate for the overheads associated with the partitioning and scheduling operations. Reading across the three tables for the same partition size and same scenario, our tool shows improved scalability as the input size grows. 
 
@@ -74,6 +75,9 @@ For each given graph and for each scenario employed, we notice that the actual r
 With that said, we observe that efficiency actually improves for larger partitions. This isn't to be construed, however, to mean that the parallelisation has improved in any way, but rather that the rate of deterioration in the performance for a smaller number of threads (particularly, the case of one thread) is higher when the number of partitions exceeds the cut-off number, resulting in a higher-speedup as the number of threads grows larger. 
 
 %Our own Spark implementation of contingency analysis executes in real-time for the entire power grid, achieving a speed-up of ? on ? processors. We conclude with a spatial understanding of the hotspots on Lebanese soil where energy centers can be exposed and are at risk, using a spatial correlation supported by a binary search tree. The amenability of our work to big data processing makes it extendable to larger networks of networks, towards a fuller understanding of resilence at many vital levels beyond the power grid. Examples are as communications network, Internet networks, transportation networks, hospitals and medical centers networks, to name a few.
+
+\secondedited{
+Moreover, we notice that the parallel efficiency in some cases is above one (e.g., in case of betweenness centrality 32 partitions and 2 threads). This may due to the effect of the garbage collectors. In case of one thread and several partitions, the threshold of the garbage collector would be reached ahead of time. Whereas in case  of more threads/processes, less data needs to be freed.}
 
 
 

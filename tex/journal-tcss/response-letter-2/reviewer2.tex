@@ -10,7 +10,9 @@
 
 ~
 
-\answer{answer goes here}
+\answer{
+We believe that the use of Spark is necessary to handle large graphs (i.e., scalability), which is not possible to in case of single machine. Using Message Passing Interface (MPI) would be also an option that allows for distributed computation and hence scalability. Nonetheless, when the graph increases failures (because of out of memory, message loss, network error) would appear very often (and not an exception), which requires to redo the whole computation.  Using Spark allows to benefit from its fault-tolerance using lineage technique as well as efficient distributed in-memory computation.  Scalability as well as fault-tolerance are discussed in the paper. We also agree with the reviewer that we should tone down the role of Spark especially in the title. 
+}
 \end{itemize}
 
 
