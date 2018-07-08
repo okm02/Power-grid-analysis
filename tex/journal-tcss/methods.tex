@@ -6,10 +6,17 @@
 
 We build the network model using data provided by the Lebanese ministry of energy and water. This dataset contains information about every power plant generator (sources for power), high-to medium voltage transmission substations, medium to low voltage distribution stations that disseminate power directly to subscribers, as well as transmission lines through which power dissipates. Transmission lines exist between generators and transmission substations, as well as among transmission substations, distribution substations, and finally, between transmission and distribution substations. 
 
+
+\secondedited{
+The power grid consists of generating stations responsible for the power production, which is transmitted through high voltage lines to demand centers, which then, in turn, distribute power to the consumers.  This design entails the emergence of a large number of connected components which is a universal feature of grids with a characteristic power-law degree distribution~\cite{RosasCasals:2007td,Bompard:2009ga,Brummitt:2013jj,Daqing:2014bp,Albert:2004bw,Wang:2011js,Sole:2008cv}.}
+%
 There are five major power plants in Lebanon. Transmission and distribution substations are such that they receive power from all of the major power plants, and so, if all but one such plant is hit, the entire network can still receive power. Because of this redundancy, the only way to achieve total failure is through the obvious choice of attacking all five power plants. 
 %
 \edited{
 To exclude this obvious scenario from our contingency analysis, the data received directly from the Lebanese ministry of power and energy does not include all five power plants from the associated graph model. This renders our contingency analysis completely focused on the irredundant nodes constituting transmission and distribution substations, where the corresponding graph representation of the power grid consists of several connected components. }
+%
+\secondedited{
+We should note that in the original dataset these five vertices were assigned a tag which described them as redundant. Therefore no extra computational work was done to identify them. In the event that the power network fails to manifest a large number of connected components that permit for the kind of distribution we are adopting in the present manuscript, one can attempt to distribute/parallelise the low-level graph Betweenness Centrality and Single Source Shortest Paths algorithms employed, using, for example, a number of distributed and parallel tools available in~\cite{Bertolucci16,Djidev14, Edmonds10, Jin10, Kumbhare14, Redekopp13, Solomonik13}, to cite a few.}
 %
 Our analysis simulates attacks on both transmission as well as distribution substations. It also pursues inter-dependencies as failures propagate within a single connected component, and addresses the overall loss of connectivity to all subscribers as a result. Finally, our analysis adopts the idealised (and simplified) view that capacity across the transmission lines is never jeopardised, and thus failure of the network is a result of attacks on substations only.
 
@@ -267,6 +274,10 @@ We conclude with Step 8. Write ${\bf L} = \{x_1,\ldots,x_n\}$, where $n = \left 
 \item{Otherwise, suppose that $x$ and $y$ belong to the same connected component. Then they certainly are tackled by the same thread. In this case, $x$ is failed before $y$ is failed, and so $loss(G\setminus \{x,y\})$ is computed correctly using the formula $loss(G \setminus \{x\}) + loss \left (\left(G \setminus \{x\}\right)\setminus \{y\}\right)$, which has already been computed locally in Step 4.} 
 \end{itemize}
 \end{proof}
+
+
+\secondedited{We are now ready to conclude the analysis of our parallel design and we follow the exposition in \cite{Jordan02, Parhami99} to define the following terms. We call a parallel algorithm {\it work-optimal} if it has the smallest possible work, defined to be the smallest possible sequential work divided by the total number of processors. This excludes the cost of partitioning, which occurs at the beginning and thus is counted towards pre-processing costs, as well as the resulting data shuffling, which we regard as being memory or communication operations, not computation. We call a parallel algorithm {\it work-time-optimal}, if in addition to being work-optimal, its time is best possible. In the following proposition, we show that our resulting parallel design is work-optimal according to the definition above. However, due to partitioning and data shuffling costs, our algorithm fails to be work-time optimal.}
+
 \begin{proposition}
 The parallelised block in Steps 1--6 of the above algorithm maintains optimal parallel work, and requires linear time communication costs and a constant number of synchronisation barriers in the BSP model. Particularly, let $p$ denote the number of threads, $W_s$ denote the serial work of the algorithm in Steps 1--6, $g$ denote the machine-dependent cost in flops to communicate one data work, and $\ell$ denote the machine-dependent cost in flops for all threads to synchronise. We then have:
 \[

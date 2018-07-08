@@ -1,0 +1,85 @@
+\section{Answers to the comments of Reviewer 1}
+
+\paragraph{}
+\begin{itemize}
+\item ``A parallel algorithm is work-optimal if it does not run more instructions than the sequential version and as such our algorithm is work-optimal. '' This seems not correct. What about partitioning cost and data shuffling?
+
+~
+
+\answer{
+Thank you for pointing this out. We concede that this needs to be fixed. We now have proceeded as follows. Before proposition 5, we make clear the following: ``We are now ready to conclude the analysis of our parallel design and we follow the exposition in \cite{Jordan02, Parhami99} to define the following terms. We call a parallel algorithm {\it work-optimal} if it has the smallest possible work, defined to be the smallest possible sequential work divided by the total number of processors. This excludes the cost of partitioning, which occurs at the beginning and thus is counted towards pre-processing costs, as well as the resulting data shuffling, which we regard as being memory or communication operations, not computation. We call a parallel algorithm {\it work-time-optimal}, if in addition to being work-optimal, its time is best possible. In the following proposition, we show that our resulting parallel design is work-optimal according to the definition above. However, due to partitioning and data shuffling costs, our algorithm fails to be work-time optimal.''  
+}
+
+~
+
+\item Since the graph the paper studied on is an undirected graph, why use strongly connected components algorithm to find connected components? 
+
+~
+
+\answer{
+to do 
+The fact that the high voltage power plants have been removed from the grid representation render the graph a disconnected one, consisting of 199004 connected components, where each component consists of transmission/distribution substations as nodes, and transmission lines between them as edges. 
++ tarjan 
++ generatization
+}
+
+~
+
+\item "The run-time and parallel efficiency for each pair of (thread,partition) values using our input graphs are shown in Table II, III, and IV. "
+I did not see Parallel efficiency is shown in the those tables. Maybe performance efficiency means "Parallel efficiency"? if that is true, please explain why the parallel efficiency could go above 1. 
+
+~
+
+\answer{to do.}
+
+~
+
+
+"The sequential part was omitted because it was extremely negligible compared to the parallel part that is of higher order (in contrast to linear running time in steps 7 and 8). We should have made this explicit and have by now inserted this comment in the text. "
+
+I did not see this in the text.
+
+~
+
+\answer{Thank you for pointing this out. We are somehow confused because we do see this comment in the text. Please check Sec. IV C, first paragraph. It is highlighted in red in the revised version.}
+
+~
+
+
+\item "We agree that the input graph is small, but what we are offering is a proof of concept that the algorithm scales and its performance improves should the graph get larger (for example, in studying the power grid of a bigger country, or networks of networks connected to the power grid such as telephony and banking system, to name a few examples)."
+
+\begin{itemize}
+\item Do you expect the power grid in other countries or telephony and banking system are low connectivity graphs?  
+
+~
+
+\answer{
+In the material and methods section, we added the following elaboration:  
+%
+``The power grid consists of generating stations responsible for the power production, which is transmitted through high voltage lines to demand centers, which then, in turn, distribute power to the consumers.  This design entails the emergence of a large number of connected components which is a universal feature of grids with a characteristic power-law degree distribution [9-15]''.  
+}
+
+~
+
+\item If not, how could you apply your approach there since the parallel algorithm proposed in the paper assumes there are a large number of connected components?  
+
+\answer{In the material and methods section, we added the following elaboration:  
+``
+In the event that the power network fails to manifest a large number of connected components that permit for the kind of distribution we are adopting in the present manuscript, one can attempt to distribute/parallelise the low-level graph Betweenness Centrality and Single Source Shortest Paths algorithms employed, using, for example, a number of distributed and parallel tools available in \cite{Bertolucci16,Djidev14, Edmonds10, Jin10, Kumbhare14, Redekopp13, Solomonik13}, to cite a few.'' 
+}
+
+\item How could find the five vertexes to remove for those networks?
+
+~
+
+\answer{In the material and methods section, we added the following elaboration:  
+``
+We should note that in the original dataset these five vertices were assigned a tag directly by the Ministry of Energy and Water which described them as redundant. Therefore no extra computational work was done to identify them.''
+}
+
+~
+\end{itemize}
+
+\end{itemize}
+
+

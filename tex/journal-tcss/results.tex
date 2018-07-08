@@ -62,7 +62,8 @@ The run-time and parallel efficiency for each pair of ({\it thread},{\it partiti
 \edited{
 Here, parallel efficiency is defined as $\frac{T_s}{p\cdot T_p}$, where $T_s$ denotes the serial run-time and $T_p$ denotes the parallel run-time given $p$ parallel processes.}
 %
-The timings shown in the Tables correspond to the parallel phase of the algorithm. The sequential run-time was omitted because it was extremely negligible compared to the parallel part that is of higher order (in contrast to linear running time in steps 7 and 8).
+\secondedited{
+The timings shown in the Tables correspond to the parallel phase of the algorithm. The sequential run-time was omitted because it was extremely negligible compared to the parallel part that is of higher order (in contrast to linear running time in steps 7 and 8).}
 %
 By default, Spark sets the partition size at 64 MB. This is too large for our given graph. As a result, we choose to override the default value by specifying the number of partitions at compile time. When this is done, Spark re-adjusts the size of each partition based on their total number as well as on the size of the input graph. The several connected components in each graph get mapped onto all partitions such that the number of vertices in each partition is balanced across all partitions. We experiment with a number of partitions ranging from $4$, $8$, $16$, and $32$ in order to explore the effect that the number of partitions have on run-time and parallel efficiency. From Fig. \ref{fig:vertices-components-all} and \ref{fig:vertices-components-40}, we gather that there would be enough connected components in each partition to engage all threads assigned to the partition. Also, the fact that many connected components have sizes greater than, say, 40, ensures that the distributed work is more or less balanced.
 
