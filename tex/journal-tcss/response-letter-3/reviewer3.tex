@@ -1,0 +1,30 @@
+\section{Answers to the comments of Reviewer 3}
+%
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+%
+
+Recommendation: Accept as Regular Paper. Summary of Evaluation: Excellent. 
+
+\begin{itemize}
+\item The authors assume that the graph is undirected. Is it the case of lebanese grid system? What is the impact on the performance if the graph is directed? 
+
+\item Section D. You mentioned that:  The spatial correlation analysis shown in Fig. 20 reveals a, …, which is in agreement with the literature results
+in [19]. Could you please elaborate more that? Is there a correlation between spatial analysis and loss?   
+
+\item When computing the loss, you assume that all the nodes and connections are identical. Practically, is it the case? 
+
+\item The authors briefly discuss the spatial correlation analysis results, concluding with a very brief statement that the failures are spatially long-range correlated. Whilst this is a mathematical conclusion made clear by their computations, I fail to see the real implications of such a result. The authors need to elaborate on that part.
+\end{itemize}
+
+\answer{
+\begin{itemize}
+\item Yes indeed. The Lebanese grid system as obtained by the ministry of Power is undirected. Please note that this bears no impact on the performance if the graph is directed. First off, all of the algorithms used (e.g. SCC and BC) have variants that can tackle directed graphs. Moreover, these variants have the same work complexity as those for the undirected graph.
+\item Not really. There is no such correlation. However, the reason we undertake this spatial analysis is because of the following. The propagation behavior of cascading failures remains unknown, unless one performs the kind of spatial analysis that explores the data for such behviour.
+\item Not really. However, the fact that SCC and BC address structural attributes of the graph rather than the weights associated with the connections or the actual nodes, make this assumption a safe one. This assumption is also valid in some of the seminal the literature cited by our manuscript. Please refer to references 4 and 19.
+\item Overload failures usually propagate through collective interactions among system components. It is important to understand the spatial correlation between distance and failure. Our results reveal that high failures in critical nodes has impact that propagates across long path lengths on Lebanese soil.
+\end{itemize}
+}
+
+
+

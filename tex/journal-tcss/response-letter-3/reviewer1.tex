@@ -1,0 +1,29 @@
+\section{Answers to the comments of Reviewer 1}
+
+\paragraph{}
+
+I do think the study of vulnerability analysis of the power grid network is very attractive and very useful. However, there are two major things I felt this paper is not quite enough for publication quality.
+\begin{itemize}
+\item The network is too small and it does not make sense to use distributed systems.
+\item The method in this paper is specific to the studied network that is not general enough. 
+Although the authors provide arguments for both in the response, but the arguments are not weak and not convincing. 
+Since the network in study is pretty small, I would suggest the authors to improve their paper from the two aspects: (1) focusing more on the vulnerability analysis; (2) in parallel/distributed aspects, since the graph is small, it would be better to parallelize the betweenness centrality for a connected component since that's the main computation, although there have already been plenty of studies on parallelizing the betweenness centrality algorithms in the parallel computing research community. 
+\end{itemize}
+
+
+\answer{
+\begin{itemize}
+\item Although the initial input graph is not large, the vulnerability analysis requires (1) very heavy computations and (2) to build intermediate graphs, which is the main reason to use a parallel distributed framework such as Apache Spark. Moreover, benchmarks show that a distributed implementation is required as it is scalable with respect to the size of the graph.
+\item 
+We elaborate more on the vulnerability analysis especially spatial analysis and its importance in our context; 
+\item As (1) the graph structure consists of numerous
+connected components where most of them are of small sizes; and (2) the connectivity can be computed and aggregated concurrently between components (Propositions 1-4), in particular, updating the betweenness centrality scores after reach removal in the cascading scenario requires information about the paths connecting each vertex to vertices only in its own
+local component and thus can be performed independently of
+other threads; then using a dedicated parallel implementation of betweenness  centrality would not be very beneficial. Add to that, as we are using RDD part of the implementation to compute local betweenness centrality is automatically parrallelized. On another hand, for large components, we can easily use and integrate existing specific parallel implementation of betweenness centrality
+\end{itemize}
+}
+
+
+
+
+
