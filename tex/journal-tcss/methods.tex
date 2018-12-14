@@ -20,7 +20,8 @@ We should note that in the original dataset these five vertices were assigned a 
 %
 Our analysis simulates attacks on both transmission as well as distribution substations. It also pursues inter-dependencies as failures propagate within a single connected component, and addresses the overall loss of connectivity to all subscribers as a result. Finally, our analysis adopts the idealised (and simplified) view that capacity across the transmission lines is never jeopardised, and thus failure of the network is a result of attacks on substations only.
 
-Our resulting network model consists of an undirected, unweighted graph with $679965$ edges, representing transmission/distribution lines, and $899162$ vertices, representing transmission/distribution substations. This is one order of magnitude larger than the graph treated in \cite{2000Natur.406..378A}, and is a consequence of the fact that the given Lebanese power grid representation captures extremely fine grained spatial coordinates, yielding all distribution substations no matter how minor. Our distribution analysis of the degrees of vertices confirms that indeed, the resulting graph exhibits a power law distribution (Fig. \ref{fig:degree-vertices}). 
+\thirdedited{
+Our resulting network model consists of an undirected, unweighted graph\footnote{Please note that this bears no impact on the performance if the graph is directed. First off, all of the algorithms used (e.g. strongly connected component and betweenness centrality) have variants that can tackle directed graphs. Moreover, these variants have the same work complexity as those for the undirected graph.} with $679965$ edges, representing transmission/distribution lines, and $899162$ vertices, representing transmission/distribution substations. This is one order of magnitude larger than the graph treated in \cite{2000Natur.406..378A}, and is a consequence of the fact that the given Lebanese power grid representation captures extremely fine grained spatial coordinates, yielding all distribution substations no matter how minor. Our distribution analysis of the degrees of vertices confirms that indeed, the resulting graph exhibits a power law distribution (Fig. \ref{fig:degree-vertices}).}
 %Also, our analysis is holistic in the sense that it simulates attacks on both transmission as well as distribution substations. 
 %insert figure here
 
@@ -293,12 +294,13 @@ Step 6 is a communication step in which all threads in one partition communicate
 \end{proof}
 
 \subsection{Spatial Correlation Analysis}
-
+\thirdedited{
 Here we study the spatial correlation between the targeted nodes in the cascading attacks scenario in an attempt to uncover any underlying spatial pattern. For this purpose, and using the geocoding of the input vertices, we examine the subset of nodes $F$ whose removal lead to a $90 \%$ connectivity loss. We are interested in measuring the the relation between failures separated by some given distance $r$. Following closely the spatial analysis of the 1996 blackout of Western Systems Coordinating Council area conducted in \cite{DaqingAl14}, we adopt the spatial correlation function $C(r)$ that measures the relation between failures that are $r$ distance apart:
 \begin{equation}
 C(x) \propto \frac{\sum_{{ij}\in F} (x_i- \bar{x} )(x_j - \bar{x}) \delta(r_{ij} - r)}{\sum_{ij \in F} \delta (r_{ij} - r)},
 \end{equation}
-Here, $x_i=1$ if node is is failed, and $0$ otherwise. Also, $\bar{x}$ denotes the average number of cascading failures over the whole network, $\delta$ denotes the function that singles out the $j$ nodes that are $r$ distance apart from $i$, and $r_{ij}$ denotes the Euclidean distance between nodes $i$ and $j$. Positive values for $C(r)$ indicate a tendency of failures to be close to each other, while negative values indicate anti-correlations.  
+Here, $x_i=1$ if node is is failed, and $0$ otherwise. Also, $\bar{x}$ denotes the average number of cascading failures over the whole network, $\delta$ denotes the function that singles out the $j$ nodes that are $r$ distance apart from $i$, and $r_{ij}$ denotes the Euclidean distance between nodes $i$ and $j$. Positive values for $C(r)$ indicate a tendency of failures to be close to each other, while negative values indicate anti-correlations.  Overload failures usually propagate through collective interactions among system components. Our results reveal that high failures in critical nodes has impact that propagates across long path lengths on Lebanese soil.}
+
 
 
 
