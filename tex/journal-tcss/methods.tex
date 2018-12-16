@@ -4,7 +4,7 @@
 
 \subsection{Input Graph}
 
-We build the network model using data provided by the Lebanese ministry of energy and water. This dataset contains information about every power plant generator (sources for power), high-to medium voltage transmission substations, medium to low voltage distribution stations that disseminate power directly to subscribers, as well as transmission lines through which power dissipates. Transmission lines exist between generators and transmission substations, as well as among transmission substations, distribution substations, and finally, between transmission and distribution substations. 
+We build the network model using data provided by the Lebanese Ministry of Energy and Water. This dataset contains information about every power plant generator (sources for power), high-to medium voltage transmission substations, medium to low voltage distribution stations that disseminate power directly to subscribers, as well as transmission lines through which power dissipates. Transmission lines exist between generators and transmission substations, as well as among transmission substations, distribution substations, and finally, between transmission and distribution substations. 
 
 
 \secondedited{
@@ -13,7 +13,7 @@ The power grid consists of generating stations responsible for the power product
 There are five major power plants in Lebanon. Transmission and distribution substations are such that they receive power from all of the major power plants, and so, if all but one such plant is hit, the entire network can still receive power. Because of this redundancy, the only way to achieve total failure is through the obvious choice of attacking all five power plants. 
 %
 \edited{
-To exclude this obvious scenario from our contingency analysis, the data received directly from the Lebanese ministry of Energy and Water does not include all five power plants from the associated graph model. This renders our contingency analysis completely focused on the irredundant nodes constituting transmission and distribution substations, where the corresponding graph representation of the power grid consists of several connected components. }
+To exclude this obvious scenario from our contingency analysis, the data received directly from the Lebanese Ministry of Energy and Water does not include all five power plants from the associated graph model. This renders our contingency analysis completely focused on the irredundant nodes constituting transmission and distribution substations, where the corresponding graph representation of the power grid consists of several connected components. }
 %
 \secondedited{
 We should note that in the original dataset these five vertices were assigned a tag directly by the Ministry of Energy and Water, which described them as redundant. Therefore no extra computational work was done to identify them. In the event that the power network fails to manifest a large number of connected components that permit for the kind of distribution we are adopting in the present manuscript, one can attempt to distribute/parallelise the low-level graph Betweenness Centrality and Single Source Shortest Paths algorithms employed, using, for example, a number of distributed and parallel tools available in~\cite{Bertolucci16,Djidev14,Edmonds10,Jin10,Kumbhare14,Redekopp13,Solomonik13}, to cite a few.}
@@ -297,9 +297,9 @@ Step 6 is a communication step in which all threads in one partition communicate
 \thirdedited{
 Here we study the spatial correlation between the targeted nodes in the cascading attacks scenario in an attempt to uncover any underlying spatial pattern. For this purpose, and using the geocoding of the input vertices, we examine the subset of nodes $F$ whose removal lead to a $90 \%$ connectivity loss. We are interested in measuring the the relation between failures separated by some given distance $r$. Following closely the spatial analysis of the 1996 blackout of Western Systems Coordinating Council area conducted in \cite{DaqingAl14}, we adopt the spatial correlation function $C(r)$ that measures the relation between failures that are $r$ distance apart:
 \begin{equation}
-C(x) \propto \frac{\sum_{{ij}\in F} (x_i- \bar{x} )(x_j - \bar{x}) \delta(r_{ij} - r)}{\sum_{ij \in F} \delta (r_{ij} - r)},
+C(x) \propto \frac{\sum_{{i,j}\in F} (x_i- \bar{x} )(x_j - \bar{x}) \delta(r_{ij} - r)}{\sum_{i,j \in F} \delta (r_{ij} - r)},
 \end{equation}
-Here, $x_i=1$ if node is is failed, and $0$ otherwise. Also, $\bar{x}$ denotes the average number of cascading failures over the whole network, $\delta$ denotes the function that singles out the $j$ nodes that are $r$ distance apart from $i$, and $r_{ij}$ denotes the Euclidean distance between nodes $i$ and $j$. Positive values for $C(r)$ indicate a tendency of failures to be close to each other, while negative values indicate anti-correlations.  Overload failures usually propagate through collective interactions among system components. Our results reveal that high failures in critical nodes has impact that propagates across long path lengths on Lebanese soil.}
+Here, $x_i=1$ if node is failed, and $0$ otherwise. Also, $\bar{x}$ denotes the average number of cascading failures over the whole network, $\delta$ denotes the function that singles out the $j$ nodes that are $r$ distance apart from $i$, and $r_{ij}$ denotes the Euclidean distance between nodes $i$ and $j$. Positive values for $C(r)$ indicate a tendency of failures to be close to each other, while negative values indicate anti-correlations.}
 
 
 
